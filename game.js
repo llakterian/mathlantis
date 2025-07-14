@@ -345,11 +345,12 @@ function renderBlockStorage() {
         block.textContent = blockData.emoji;
         block.style.opacity = '1';
         
-        // Add drag events
+        // Add drag events (both mouse and touch)
         block.draggable = true;
         
         // Use closure to preserve blockData for each block
         (function(currentBlockData) {
+            // Standard drag events
             block.addEventListener('dragstart', (e) => {
                 e.dataTransfer.setData('text/plain', currentBlockData.color);
                 e.dataTransfer.setData('value', currentBlockData.value.toString());
@@ -361,6 +362,83 @@ function renderBlockStorage() {
             
             block.addEventListener('dragend', (e) => {
                 block.style.opacity = '1';
+            });
+            
+            // Touch events for mobile/tablet support
+            let touchStartX, touchStartY;
+            let isDragging = false;
+            let originalParent = block.parentElement;
+            
+            block.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                isDragging = true;
+                block.style.opacity = '0.3';
+                block.style.zIndex = '1000';
+                block.style.transform = 'scale(1.1)';
+            });
+            
+            block.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                
+                const touch = e.touches[0];
+                const rect = block.getBoundingClientRect();
+                
+                // Move the block with touch
+                block.style.position = 'fixed';
+                block.style.left = (touch.clientX - rect.width / 2) + 'px';
+                block.style.top = (touch.clientY - rect.height / 2) + 'px';
+                block.style.pointerEvents = 'none';
+                
+                // Visual feedback for drop zone
+                const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+                if (elementBelow && (elementBelow.id === 'city-canvas' || elementBelow.closest('#city-canvas'))) {
+                    cityCanvas.style.backgroundColor = '#d5f5e3';
+                } else {
+                    cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
+                }
+            });
+            
+            block.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                
+                isDragging = false;
+                block.style.opacity = '1';
+                block.style.zIndex = 'auto';
+                block.style.transform = 'scale(1)';
+                block.style.position = 'static';
+                block.style.pointerEvents = 'auto';
+                cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
+                
+                // Check if dropped on building area
+                const touch = e.changedTouches[0];
+                const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+                
+                if (elementBelow && (elementBelow.id === 'city-canvas' || elementBelow.closest('#city-canvas'))) {
+                    // Simulate a drop on the building area
+                    const fakeDropEvent = {
+                        preventDefault: () => {},
+                        clientX: touch.clientX,
+                        clientY: touch.clientY,
+                        dataTransfer: {
+                            getData: (type) => {
+                                switch(type) {
+                                    case 'text/plain': return currentBlockData.color;
+                                    case 'value': return currentBlockData.value.toString();
+                                    case 'emoji': return currentBlockData.emoji;
+                                    case 'blockId': return currentBlockData.id.toString();
+                                    default: return '';
+                                }
+                            }
+                        }
+                    };
+                    
+                    // Call the drop handler
+                    handleCityCanvasDrop(fakeDropEvent);
+                }
             });
         })(blockData);
         
@@ -776,6 +854,98 @@ function updateBuildingTemplates() {
     });
 }
 
+// Handle drop events on city canvas (both mouse and touch)
+function handleCityCanvasDrop(e) {
+    e.preventDefault();
+    cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
+    
+    const color = e.dataTransfer.getData('text/plain');
+    const value = parseInt(e.dataTransfer.getData('value'));
+    const emoji = e.dataTransfer.getData('emoji');
+    const blockId = e.dataTransfer.getData('blockId');
+    
+    // Validate the drop data
+    if (!color || isNaN(value) || !emoji) {
+        showMessage("Invalid block data!");
+        return;
+    }
+    
+    if (blocks < value) {
+        showMessage(`You need ${value} blocks to place this!`);
+        return;
+    }
+    
+    // Remove block from storage if it's from storage
+    if (blockId) {
+        const blockIndex = blockStorage.findIndex(b => b.id.toString() === blockId);
+        if (blockIndex !== -1) {
+            blockStorage.splice(blockIndex, 1);
+            // Re-render storage to update the display
+            setTimeout(() => renderBlockStorage(), 10);
+        }
+    }
+    
+    blocks -= value;
+    blockCountEl.textContent = blocks;
+    
+    const block = document.createElement('div');
+    block.className = 'city-block';
+    block.style.background = color;
+    block.style.position = 'absolute';
+    block.style.width = '50px';
+    block.style.height = '50px';
+    block.style.border = '2px solid #333';
+    block.style.borderRadius = '5px';
+    block.style.display = 'flex';
+    block.style.alignItems = 'center';
+    block.style.justifyContent = 'center';
+    block.style.fontSize = '20px';
+    block.style.cursor = 'move';
+    
+    // Calculate position to drop the block
+    const rect = cityCanvas.getBoundingClientRect();
+    const x = e.clientX - rect.left - 25; // Center the block on cursor
+    const y = e.clientY - rect.top - 25;
+    
+    // Snap to grid for better placement
+    const snapSize = 10;
+    const snappedX = Math.round(x / snapSize) * snapSize;
+    const snappedY = Math.round(y / snapSize) * snapSize;
+    
+    block.style.left = `${Math.max(0, Math.min(snappedX, rect.width - 50))}px`;
+    block.style.top = `${Math.max(0, Math.min(snappedY, rect.height - 50))}px`;
+    block.textContent = emoji;
+    block.draggable = true;
+    block.dataset.value = value;
+    
+    // Add drag events for placed blocks
+    block.addEventListener('dragstart', (e) => {
+        draggedBlock = block;
+        const rect = block.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+        block.style.opacity = '0.5';
+        e.dataTransfer.effectAllowed = 'move';
+    });
+    
+    block.addEventListener('dragend', () => {
+        block.style.opacity = '1';
+        draggedBlock = null;
+    });
+    
+    cityCanvas.appendChild(block);
+    playBuildSound();
+    buildingsBuilt += value;
+    
+    // Add to history for undo functionality
+    buildingHistory.push({ element: block, value: value });
+    if (buildingHistory.length > MAX_HISTORY_STEPS) {
+        buildingHistory.shift(); // Remove oldest action if we exceed max steps
+    }
+    
+    updateProgress();
+}
+
 // Enhanced drag and drop setup for building area
 function setupEventListeners() {
     // Math answer submission
@@ -799,96 +969,7 @@ function setupEventListeners() {
         cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
     });
     
-    cityCanvas.addEventListener('drop', (e) => {
-        e.preventDefault();
-        cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
-        
-        const color = e.dataTransfer.getData('text/plain');
-        const value = parseInt(e.dataTransfer.getData('value'));
-        const emoji = e.dataTransfer.getData('emoji');
-        const blockId = e.dataTransfer.getData('blockId');
-        
-        // Validate the drop data
-        if (!color || isNaN(value) || !emoji) {
-            showMessage("Invalid block data!");
-            return;
-        }
-        
-        if (blocks < value) {
-            showMessage(`You need ${value} blocks to place this!`);
-            return;
-        }
-        
-        // Remove block from storage if it's from storage
-        if (blockId) {
-            const blockIndex = blockStorage.findIndex(b => b.id.toString() === blockId);
-            if (blockIndex !== -1) {
-                blockStorage.splice(blockIndex, 1);
-                // Re-render storage to update the display
-                setTimeout(() => renderBlockStorage(), 10);
-            }
-        }
-        
-        blocks -= value;
-        blockCountEl.textContent = blocks;
-        
-        const block = document.createElement('div');
-        block.className = 'city-block';
-        block.style.background = color;
-        block.style.position = 'absolute';
-        block.style.width = '50px';
-        block.style.height = '50px';
-        block.style.border = '2px solid #333';
-        block.style.borderRadius = '5px';
-        block.style.display = 'flex';
-        block.style.alignItems = 'center';
-        block.style.justifyContent = 'center';
-        block.style.fontSize = '20px';
-        block.style.cursor = 'move';
-        
-        // Calculate position to drop the block
-        const rect = cityCanvas.getBoundingClientRect();
-        const x = e.clientX - rect.left - 25; // Center the block on cursor
-        const y = e.clientY - rect.top - 25;
-        
-        // Snap to grid for better placement
-        const snapSize = 10;
-        const snappedX = Math.round(x / snapSize) * snapSize;
-        const snappedY = Math.round(y / snapSize) * snapSize;
-        
-        block.style.left = `${Math.max(0, Math.min(snappedX, rect.width - 50))}px`;
-        block.style.top = `${Math.max(0, Math.min(snappedY, rect.height - 50))}px`;
-        block.textContent = emoji;
-        block.draggable = true;
-        block.dataset.value = value;
-        
-        // Add drag events for placed blocks
-        block.addEventListener('dragstart', (e) => {
-            draggedBlock = block;
-            const rect = block.getBoundingClientRect();
-            offsetX = e.clientX - rect.left;
-            offsetY = e.clientY - rect.top;
-            block.style.opacity = '0.5';
-            e.dataTransfer.effectAllowed = 'move';
-        });
-        
-        block.addEventListener('dragend', () => {
-            block.style.opacity = '1';
-            draggedBlock = null;
-        });
-        
-        cityCanvas.appendChild(block);
-        playBuildSound();
-        buildingsBuilt += value;
-        
-        // Add to history for undo functionality
-        buildingHistory.push({ element: block, value: value });
-        if (buildingHistory.length > MAX_HISTORY_STEPS) {
-            buildingHistory.shift(); // Remove oldest action if we exceed max steps
-        }
-        
-        updateProgress();
-    });
+    cityCanvas.addEventListener('drop', handleCityCanvasDrop);
     
     // Enable dragging placed blocks around the canvas
     cityCanvas.addEventListener('dragover', (e) => {
