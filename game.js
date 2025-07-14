@@ -384,12 +384,11 @@ function renderBlockStorage() {
                 e.preventDefault();
                 
                 const touch = e.touches[0];
-                const rect = block.getBoundingClientRect();
                 
-                // Move the block with touch
+                // Move the block with touch without breaking grid layout
                 block.style.position = 'fixed';
-                block.style.left = (touch.clientX - rect.width / 2) + 'px';
-                block.style.top = (touch.clientY - rect.height / 2) + 'px';
+                block.style.left = (touch.clientX - 25) + 'px';
+                block.style.top = (touch.clientY - 25) + 'px';
                 block.style.pointerEvents = 'none';
                 
                 // Visual feedback for drop zone
@@ -409,7 +408,6 @@ function renderBlockStorage() {
                 block.style.opacity = '1';
                 block.style.zIndex = 'auto';
                 block.style.transform = 'scale(1)';
-                block.style.position = 'static';
                 block.style.pointerEvents = 'auto';
                 cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
                 
@@ -438,6 +436,9 @@ function renderBlockStorage() {
                     
                     // Call the drop handler
                     handleCityCanvasDrop(fakeDropEvent);
+                } else {
+                    // Reset position if not dropped on canvas
+                    block.style.position = 'static';
                 }
             });
         })(blockData);
@@ -918,7 +919,7 @@ function handleCityCanvasDrop(e) {
     block.draggable = true;
     block.dataset.value = value;
     
-    // Add drag events for placed blocks
+    // Add drag events for placed blocks (both mouse and touch)
     block.addEventListener('dragstart', (e) => {
         draggedBlock = block;
         const rect = block.getBoundingClientRect();
@@ -931,6 +932,60 @@ function handleCityCanvasDrop(e) {
     block.addEventListener('dragend', () => {
         block.style.opacity = '1';
         draggedBlock = null;
+    });
+    
+    // Touch events for moving placed blocks
+    let touchStartX, touchStartY;
+    let isDragging = false;
+    
+    block.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isDragging = true;
+        block.style.opacity = '0.5';
+        block.style.zIndex = '1000';
+        block.style.transform = 'scale(1.1)';
+        
+        // Store original position
+        const rect = block.getBoundingClientRect();
+        const canvasRect = cityCanvas.getBoundingClientRect();
+        offsetX = touchStartX - rect.left;
+        offsetY = touchStartY - rect.top;
+    });
+    
+    block.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        
+        const touch = e.touches[0];
+        const canvasRect = cityCanvas.getBoundingClientRect();
+        
+        // Calculate new position relative to canvas
+        const x = touch.clientX - canvasRect.left - offsetX;
+        const y = touch.clientY - canvasRect.top - offsetY;
+        
+        // Snap to grid
+        const snapSize = 10;
+        const snappedX = Math.round(x / snapSize) * snapSize;
+        const snappedY = Math.round(y / snapSize) * snapSize;
+        
+        // Keep within canvas bounds
+        const constrainedX = Math.max(0, Math.min(snappedX, canvasRect.width - 50));
+        const constrainedY = Math.max(0, Math.min(snappedY, canvasRect.height - 50));
+        
+        block.style.left = constrainedX + 'px';
+        block.style.top = constrainedY + 'px';
+    });
+    
+    block.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        
+        isDragging = false;
+        block.style.opacity = '1';
+        block.style.zIndex = 'auto';
+        block.style.transform = 'scale(1)';
     });
     
     cityCanvas.appendChild(block);
