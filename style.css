@@ -169,72 +169,308 @@ h1 {
 }
 
 button {
-    background-color: #3498db;
+    background: linear-gradient(45deg, #3498db, #5dade2);
     color: white;
-    border: none;
-    padding: 10px 15px;
+    border: 3px solid #ffffff;
+    padding: 12px 18px;
     font-size: clamp(0.9rem, 3vw, 1.1rem);
-    border-radius: 5px;
+    font-weight: bold;
+    border-radius: 25px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     flex: 1 1 auto;
     min-width: 100px;
     max-width: 180px;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+    animation: buttonFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes buttonFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-2px); }
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
 }
 
 button:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
+    background: linear-gradient(45deg, #2980b9, #3498db);
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+button:hover::before {
+    left: 100%;
 }
 
 button:active {
-    background-color: #1e5f8e !important;
+    background: linear-gradient(45deg, #1e5f8e, #2980b9) !important;
     color: white !important;
-    transform: scale(0.95);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border-color: #fff !important;
+    transform: scale(0.95) rotate(0deg) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
 }
 
 button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.4), 0 4px 15px rgba(52, 152, 219, 0.3);
 }
 
 #minigame-btn {
-    background-color: #9b59b6;
+    background: linear-gradient(45deg, #9b59b6, #bb8fce);
+    border-radius: 50px;
+    border: 3px solid #ffffff;
+    position: relative;
+}
+
+#minigame-btn::after {
+    content: '🎮';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 16px;
+    background: #fff;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 #minigame-btn:hover {
-    background-color: #8e44ad;
+    background: linear-gradient(45deg, #8e44ad, #9b59b6);
+    transform: scale(1.05) rotate(-2deg);
+    box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
 }
 
 #minigame-btn:active {
-    background-color: #7d3c98 !important;
+    background: linear-gradient(45deg, #7d3c98, #8e44ad) !important;
     color: white !important;
-    transform: scale(0.95);
+    border-color: #fff !important;
+    transform: scale(0.95) rotate(0deg) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
 }
 
 #minigame-btn:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.3);
+    box-shadow: 0 0 0 4px rgba(155, 89, 182, 0.4), 0 4px 15px rgba(155, 89, 182, 0.3);
 }
 
 #undo-btn {
-    background-color: #e74c3c;
+    background: linear-gradient(45deg, #e74c3c, #f1948a);
+    border-radius: 15px;
+    border: 3px solid #ffffff;
+    position: relative;
+    clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%);
+}
+
+#undo-btn::before {
+    content: '↶';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    font-size: 20px;
+    background: #fff;
+    color: #e74c3c;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    font-weight: bold;
 }
 
 #undo-btn:hover {
-    background-color: #c0392b;
+    background: linear-gradient(45deg, #c0392b, #e74c3c);
+    transform: scale(1.05) rotate(-1deg);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
 }
 
 #undo-btn:active {
-    background-color: #a93226 !important;
+    background: linear-gradient(45deg, #a93226, #c0392b) !important;
     color: white !important;
-    transform: scale(0.95);
+    border-color: #fff !important;
+    transform: scale(0.95) rotate(0deg) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
 }
 
 #undo-btn:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3);
+    box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.4), 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+/* Submit Button - Star Shape */
+#submit-btn {
+    background: linear-gradient(45deg, #f39c12, #f7dc6f);
+    border-radius: 20px;
+    border: 3px solid #ffffff;
+    position: relative;
+}
+
+#submit-btn::after {
+    content: '⭐';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 16px;
+    background: #fff;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#submit-btn:hover {
+    background: linear-gradient(45deg, #e67e22, #f39c12);
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+}
+
+#submit-btn:active {
+    background: linear-gradient(45deg, #d35400, #e67e22) !important;
+    color: white !important;
+    border-color: #fff !important;
+    transform: scale(0.95) rotate(0deg) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+}
+
+/* Leaderboard Button - Trophy Shape */
+#leaderboard-btn {
+    background: linear-gradient(45deg, #2ecc71, #58d68d);
+    border-radius: 30px;
+    border: 3px solid #ffffff;
+    position: relative;
+}
+
+#leaderboard-btn::after {
+    content: '🏆';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 16px;
+    background: #fff;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#leaderboard-btn:hover {
+    background: linear-gradient(45deg, #27ae60, #2ecc71);
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+}
+
+#leaderboard-btn:active {
+    background: linear-gradient(45deg, #1e8449, #27ae60) !important;
+    color: white !important;
+    border-color: #fff !important;
+    transform: scale(0.95) rotate(0deg) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+}
+
+/* City Showcase Button - Camera Shape */
+#city-showcase-btn {
+    background: linear-gradient(45deg, #e91e63, #f48fb1);
+    border-radius: 20px;
+    border: 3px solid #ffffff;
+    position: relative;
+}
+
+#city-showcase-btn::after {
+    content: '📸';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 16px;
+    background: #fff;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#city-showcase-btn:hover {
+    background: linear-gradient(45deg, #c2185b, #e91e63);
+    transform: scale(1.05) rotate(-1deg);
+    box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+}
+
+#city-showcase-btn:active {
+    background: linear-gradient(45deg, #ad1457, #c2185b) !important;
+    color: white !important;
+    border-color: #fff !important;
+    transform: scale(0.95) rotate(0deg) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+}
+
+/* Customize Button - Paintbrush Shape */
+#customize-btn {
+    background: linear-gradient(45deg, #ff5722, #ff8a65);
+    border-radius: 25px;
+    border: 3px solid #ffffff;
+    position: relative;
+}
+
+#customize-btn::after {
+    content: '🎨';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 16px;
+    background: #fff;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#customize-btn:hover {
+    background: linear-gradient(45deg, #d84315, #ff5722);
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 6px 20px rgba(255, 87, 34, 0.4);
+}
+
+#customize-btn:active {
+    background: linear-gradient(45deg, #bf360c, #d84315) !important;
+    color: white !important;
+    border-color: #fff !important;
+    transform: scale(0.95) rotate(0deg) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
 }
 
 /* Building Area */
@@ -368,31 +604,55 @@ button:focus {
 
 /* Templates */
 .template {
-    background: #3498db;
+    background: linear-gradient(45deg, #3498db, #5dade2);
     color: white;
-    padding: 8px;
+    padding: 10px 15px;
     margin: 5px;
-    border-radius: 5px;
+    border-radius: 20px;
+    border: 2px solid #ffffff;
     cursor: pointer;
     display: inline-block;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.template::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
 }
 
 .template:hover {
-    background: #2980b9;
-    transform: scale(1.05);
+    background: linear-gradient(45deg, #2980b9, #3498db);
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+}
+
+.template:hover::before {
+    left: 100%;
 }
 
 .template:active {
-    background: #1e5f8e !important;
+    background: linear-gradient(45deg, #1e5f8e, #2980b9) !important;
     color: white !important;
-    transform: scale(0.95);
+    border-color: #fff !important;
+    transform: scale(0.95) rotate(0deg) !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
 }
 
 .template:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.4), 0 4px 10px rgba(52, 152, 219, 0.3);
 }
 
 /* Effects */
