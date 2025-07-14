@@ -10,6 +10,7 @@ const MAX_HISTORY_STEPS = 7;
 let draggedBlock = null;
 let offsetX, offsetY;
 let currentWorld = 0;
+let blockStorage = []; // Persistent storage for blocks
 
 // Game difficulty levels
 const difficultyLevels = [
@@ -288,15 +289,43 @@ function checkAnswer() {
 
 // Create visual blocks as rewards (arranged neatly in a grid)
 function createNewBlocks(count) {
-    const visualBlocks = Math.min(count, 10);
     const difficulty = difficultyLevels[currentDifficulty];
     
-    // Clear existing blocks
+    // Add blocks to persistent storage
+    for (let i = 0; i < count; i++) {
+        const blockData = {
+            id: Date.now() + i,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            value: 1,
+            emoji: '⬜'
+        };
+        
+        // Determine if this is a special block
+        if (Math.random() < difficulty.specialBlockChance) {
+            const specialTypes = Object.keys(specialBlocks);
+            const specialType = specialTypes[Math.floor(Math.random() * specialTypes.length)];
+            blockData.color = specialBlocks[specialType].color;
+            blockData.value = Math.ceil(specialBlocks[specialType].points * (currentDifficulty + 1));
+            blockData.emoji = specialBlocks[specialType].emoji;
+        }
+        
+        blockStorage.push(blockData);
+    }
+    
+    renderBlockStorage();
+}
+
+// Render blocks from storage
+function renderBlockStorage() {
     blocksContainer.innerHTML = '';
     
-    // Calculate grid dimensions
-    const cols = Math.ceil(Math.sqrt(visualBlocks));
-    const rows = Math.ceil(visualBlocks / cols);
+    if (blockStorage.length === 0) {
+        blocksContainer.style.display = 'none';
+        return;
+    }
+    
+    // Calculate grid dimensions for all blocks in storage
+    const cols = Math.ceil(Math.sqrt(blockStorage.length));
     
     // Set container dimensions based on block count
     blocksContainer.style.display = 'grid';
@@ -305,35 +334,35 @@ function createNewBlocks(count) {
     blocksContainer.style.justifyItems = 'center';
     blocksContainer.style.padding = '5px';
     
-    for (let i = 0; i < visualBlocks; i++) {
+    // Render all blocks in storage
+    for (let i = 0; i < blockStorage.length; i++) {
+        const blockData = blockStorage[i];
         const block = document.createElement('div');
         block.className = 'block';
-        
-        // Determine if this is a special block
-        if (Math.random() < difficulty.specialBlockChance) {
-            const specialTypes = Object.keys(specialBlocks);
-            const specialType = specialTypes[Math.floor(Math.random() * specialTypes.length)];
-            block.style.background = specialBlocks[specialType].color;
-            block.dataset.value = Math.ceil(specialBlocks[specialType].points * (currentDifficulty + 1));
-            block.textContent = specialBlocks[specialType].emoji;
-        } else {
-            block.style.background = colors[Math.floor(Math.random() * colors.length)];
-            block.dataset.value = 1;
-            block.textContent = '⬜';
-        }
+        block.style.background = blockData.color;
+        block.dataset.value = blockData.value;
+        block.dataset.blockId = blockData.id;
+        block.textContent = blockData.emoji;
+        block.style.opacity = '1';
         
         // Add drag events
         block.draggable = true;
-        block.addEventListener('dragstart', (e) => {
-            e.dataTransfer.setData('text/plain', block.style.backgroundColor);
-            e.dataTransfer.setData('value', block.dataset.value);
-            e.dataTransfer.setData('emoji', block.innerHTML);
-            setTimeout(() => block.style.opacity = '0.4', 0);
-        });
         
-        block.addEventListener('dragend', () => {
-            block.style.opacity = '1';
-        });
+        // Use closure to preserve blockData for each block
+        (function(currentBlockData) {
+            block.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', currentBlockData.color);
+                e.dataTransfer.setData('value', currentBlockData.value.toString());
+                e.dataTransfer.setData('emoji', currentBlockData.emoji);
+                e.dataTransfer.setData('blockId', currentBlockData.id.toString());
+                e.dataTransfer.effectAllowed = 'move';
+                block.style.opacity = '0.3';
+            });
+            
+            block.addEventListener('dragend', (e) => {
+                block.style.opacity = '1';
+            });
+        })(blockData);
         
         blocksContainer.appendChild(block);
     }
@@ -464,10 +493,244 @@ function startDayNightCycle() {
     }, 30000); // Change every 30 seconds
 }
 
-// Mini-game placeholder
+// Mini-game implementation
 function startMiniGame() {
     const world = worlds[currentWorld];
-    showMessage(`${world.name} mini-game coming soon! Keep solving math problems for now!`);
+    
+    // Create mini-game modal
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    `;
+    
+    const content = document.createElement('div');
+    content.style.cssText = `
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 400px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    `;
+    
+    content.innerHTML = `
+        <h2><i class="fas fa-gamepad"></i> ${world.name} Mini-Game</h2>
+        <p>Quick Math Challenge!</p>
+        <div style="margin: 20px 0;">
+            <div id="mini-equation" style="font-size: 24px; margin: 10px 0;"></div>
+            <input type="number" id="mini-answer" placeholder="Answer" style="padding: 10px; font-size: 18px; width: 100px; text-align: center;">
+        </div>
+        <div>
+            <button id="mini-submit" style="padding: 10px 20px; margin: 5px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Submit</button>
+            <button id="mini-close" style="padding: 10px 20px; margin: 5px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+        </div>
+        <div id="mini-result" style="margin-top: 15px; font-weight: bold;"></div>
+    `;
+    
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+    
+    // Generate mini-game equation
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    const operation = Math.random() > 0.5 ? '+' : '-';
+    const answer = operation === '+' ? num1 + num2 : Math.max(num1, num2) - Math.min(num1, num2);
+    
+    document.getElementById('mini-equation').textContent = `${Math.max(num1, num2)} ${operation} ${Math.min(num1, num2)} = ?`;
+    
+    document.getElementById('mini-submit').addEventListener('click', () => {
+        const userAnswer = parseInt(document.getElementById('mini-answer').value);
+        const result = document.getElementById('mini-result');
+        
+        if (userAnswer === answer) {
+            result.style.color = 'green';
+            result.textContent = 'Correct! +2 bonus blocks!';
+            blocks += 2;
+            blockCountEl.textContent = blocks;
+            createNewBlocks(2);
+            playCorrectSound();
+        } else {
+            result.style.color = 'red';
+            result.textContent = `Wrong! The answer was ${answer}`;
+        }
+    });
+    
+    document.getElementById('mini-close').addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+    
+    document.getElementById('mini-answer').focus();
+}
+
+// Leaderboard functionality
+function showLeaderboard() {
+    const modal = createModal();
+    const content = modal.querySelector('.modal-content');
+    
+    content.innerHTML = `
+        <h2><i class="fas fa-trophy"></i> Leaderboard</h2>
+        <div style="text-align: left; margin: 20px 0;">
+            <h3>Your Stats:</h3>
+            <p><i class="fas fa-building"></i> Buildings Built: ${buildingsBuilt}</p>
+            <p><i class="fas fa-cubes"></i> Blocks Earned: ${blocks}</p>
+            <p><i class="fas fa-star"></i> Difficulty: ${difficultyLevels[currentDifficulty].name}</p>
+            <p><i class="fas fa-globe"></i> Current World: ${worlds[currentWorld].name}</p>
+        </div>
+        <div style="text-align: left; margin: 20px 0;">
+            <h3>Achievements:</h3>
+            <div id="achievements-list"></div>
+        </div>
+        <button onclick="this.parentElement.parentElement.remove()" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+    `;
+    
+    // Add achievements
+    const achievementsList = content.querySelector('#achievements-list');
+    const achievements = [
+        { name: "First Steps", condition: buildingsBuilt >= 1, icon: "🏠" },
+        { name: "City Builder", condition: buildingsBuilt >= 25, icon: "🏙️" },
+        { name: "Master Builder", condition: buildingsBuilt >= 100, icon: "🏗️" },
+        { name: "Math Genius", condition: currentDifficulty >= 3, icon: "🧠" },
+        { name: "World Explorer", condition: currentWorld >= 1, icon: "🌍" }
+    ];
+    
+    achievements.forEach(achievement => {
+        const div = document.createElement('div');
+        div.style.cssText = `margin: 5px 0; padding: 5px; background: ${achievement.condition ? '#d4edda' : '#f8d7da'}; border-radius: 3px;`;
+        div.innerHTML = `${achievement.icon} ${achievement.name} ${achievement.condition ? '✅' : '❌'}`;
+        achievementsList.appendChild(div);
+    });
+    
+    document.body.appendChild(modal);
+}
+
+// City showcase functionality
+function showCityShowcase() {
+    const modal = createModal();
+    const content = modal.querySelector('.modal-content');
+    
+    content.innerHTML = `
+        <h2><i class="fas fa-camera"></i> City Showcase</h2>
+        <div style="margin: 20px 0;">
+            <div style="border: 2px solid #ddd; padding: 20px; border-radius: 10px; background: #f9f9f9;">
+                <h3>Your ${worlds[currentWorld].name} City</h3>
+                <p><i class="fas fa-building"></i> Buildings: ${buildingsBuilt}</p>
+                <p><i class="fas fa-star"></i> City Rating: ${Math.min(5, Math.floor(buildingsBuilt / 30) + 1)}/5 ⭐</p>
+                <p><i class="fas fa-users"></i> Population: ${buildingsBuilt * 10}</p>
+                <p><i class="fas fa-coins"></i> City Value: ${buildingsBuilt * 100} coins</p>
+            </div>
+            <div style="margin: 15px 0;">
+                <button onclick="shareCity()" style="padding: 10px 15px; margin: 5px; background: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer;"><i class="fas fa-share"></i> Share City</button>
+                <button onclick="saveCity()" style="padding: 10px 15px; margin: 5px; background: #f39c12; color: white; border: none; border-radius: 5px; cursor: pointer;"><i class="fas fa-save"></i> Save Progress</button>
+            </div>
+        </div>
+        <button onclick="this.parentElement.parentElement.remove()" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+// Customization functionality
+function showCustomization() {
+    const modal = createModal();
+    const content = modal.querySelector('.modal-content');
+    
+    content.innerHTML = `
+        <h2><i class="fas fa-paint-brush"></i> Customize Your Game</h2>
+        <div style="text-align: left; margin: 20px 0;">
+            <h3>Color Themes:</h3>
+            <div style="margin: 10px 0;">
+                <button onclick="changeTheme('default')" style="padding: 8px 15px; margin: 5px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Default Blue</button>
+                <button onclick="changeTheme('green')" style="padding: 8px 15px; margin: 5px; background: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer;">Nature Green</button>
+                <button onclick="changeTheme('purple')" style="padding: 8px 15px; margin: 5px; background: #9b59b6; color: white; border: none; border-radius: 5px; cursor: pointer;">Royal Purple</button>
+                <button onclick="changeTheme('orange')" style="padding: 8px 15px; margin: 5px; background: #f39c12; color: white; border: none; border-radius: 5px; cursor: pointer;">Sunset Orange</button>
+            </div>
+            <h3>Game Settings:</h3>
+            <div style="margin: 10px 0;">
+                <label><input type="checkbox" id="sound-toggle" ${true ? 'checked' : ''}> Enable Sound Effects</label><br>
+                <label><input type="checkbox" id="animation-toggle" ${true ? 'checked' : ''}> Enable Animations</label><br>
+                <label><input type="checkbox" id="auto-save" ${true ? 'checked' : ''}> Auto-save Progress</label>
+            </div>
+        </div>
+        <button onclick="this.parentElement.parentElement.remove()" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+// Helper function to create modal
+function createModal() {
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    `;
+    
+    const content = document.createElement('div');
+    content.className = 'modal-content';
+    content.style.cssText = `
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    `;
+    
+    modal.appendChild(content);
+    return modal;
+}
+
+// Helper functions for customization
+function shareCity() {
+    showMessage(`City shared! Your ${worlds[currentWorld].name} city with ${buildingsBuilt} buildings is amazing!`);
+}
+
+function saveCity() {
+    localStorage.setItem('mathlantis-save', JSON.stringify({
+        blocks,
+        buildingsBuilt,
+        currentDifficulty,
+        currentWorld,
+        blockStorage
+    }));
+    showMessage("Progress saved successfully!");
+}
+
+function changeTheme(theme) {
+    const root = document.documentElement;
+    switch(theme) {
+        case 'green':
+            root.style.setProperty('--primary-color', '#2ecc71');
+            break;
+        case 'purple':
+            root.style.setProperty('--primary-color', '#9b59b6');
+            break;
+        case 'orange':
+            root.style.setProperty('--primary-color', '#f39c12');
+            break;
+        default:
+            root.style.setProperty('--primary-color', '#3498db');
+    }
+    showMessage(`Theme changed to ${theme}!`);
 }
 
 // Update building templates based on current world
@@ -522,9 +785,9 @@ function setupEventListeners() {
     });
 
     // Social and customization buttons
-    document.getElementById('leaderboard-btn').addEventListener('click', () => showMessage("Leaderboards coming soon!"));
-    document.getElementById('city-showcase-btn').addEventListener('click', () => showMessage("City Showcase coming soon!"));
-    document.getElementById('customize-btn').addEventListener('click', () => showMessage("Customization coming soon!"));
+    document.getElementById('leaderboard-btn').addEventListener('click', showLeaderboard);
+    document.getElementById('city-showcase-btn').addEventListener('click', showCityShowcase);
+    document.getElementById('customize-btn').addEventListener('click', showCustomization);
     
     // Building area drop zone
     cityCanvas.addEventListener('dragover', (e) => {
@@ -543,10 +806,27 @@ function setupEventListeners() {
         const color = e.dataTransfer.getData('text/plain');
         const value = parseInt(e.dataTransfer.getData('value'));
         const emoji = e.dataTransfer.getData('emoji');
+        const blockId = e.dataTransfer.getData('blockId');
+        
+        // Validate the drop data
+        if (!color || isNaN(value) || !emoji) {
+            showMessage("Invalid block data!");
+            return;
+        }
         
         if (blocks < value) {
             showMessage(`You need ${value} blocks to place this!`);
             return;
+        }
+        
+        // Remove block from storage if it's from storage
+        if (blockId) {
+            const blockIndex = blockStorage.findIndex(b => b.id.toString() === blockId);
+            if (blockIndex !== -1) {
+                blockStorage.splice(blockIndex, 1);
+                // Re-render storage to update the display
+                setTimeout(() => renderBlockStorage(), 10);
+            }
         }
         
         blocks -= value;
@@ -556,6 +836,15 @@ function setupEventListeners() {
         block.className = 'city-block';
         block.style.background = color;
         block.style.position = 'absolute';
+        block.style.width = '50px';
+        block.style.height = '50px';
+        block.style.border = '2px solid #333';
+        block.style.borderRadius = '5px';
+        block.style.display = 'flex';
+        block.style.alignItems = 'center';
+        block.style.justifyContent = 'center';
+        block.style.fontSize = '20px';
+        block.style.cursor = 'move';
         
         // Calculate position to drop the block
         const rect = cityCanvas.getBoundingClientRect();
@@ -579,13 +868,12 @@ function setupEventListeners() {
             const rect = block.getBoundingClientRect();
             offsetX = e.clientX - rect.left;
             offsetY = e.clientY - rect.top;
-            block.classList.add('dragging');
-            setTimeout(() => block.style.opacity = '0.4', 0);
+            block.style.opacity = '0.5';
+            e.dataTransfer.effectAllowed = 'move';
         });
         
         block.addEventListener('dragend', () => {
             block.style.opacity = '1';
-            block.classList.remove('dragging');
             draggedBlock = null;
         });
         
