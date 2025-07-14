@@ -384,19 +384,22 @@ function renderBlockStorage() {
                 e.preventDefault();
                 
                 const touch = e.touches[0];
+                const rect = block.getBoundingClientRect();
                 
-                // Move the block with touch without breaking grid layout
+                // Move the block with touch
                 block.style.position = 'fixed';
-                block.style.left = (touch.clientX - 25) + 'px';
-                block.style.top = (touch.clientY - 25) + 'px';
+                block.style.left = (touch.clientX - rect.width / 2) + 'px';
+                block.style.top = (touch.clientY - rect.height / 2) + 'px';
                 block.style.pointerEvents = 'none';
                 
                 // Visual feedback for drop zone
                 const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
                 if (elementBelow && (elementBelow.id === 'city-canvas' || elementBelow.closest('#city-canvas'))) {
                     cityCanvas.style.backgroundColor = '#d5f5e3';
+                    cityCanvas.style.border = '2px solid #2ecc71';
                 } else {
                     cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
+                    cityCanvas.style.border = '2px dashed #7f8c8d';
                 }
             });
             
@@ -408,8 +411,10 @@ function renderBlockStorage() {
                 block.style.opacity = '1';
                 block.style.zIndex = 'auto';
                 block.style.transform = 'scale(1)';
+                block.style.position = 'static';
                 block.style.pointerEvents = 'auto';
                 cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
+                cityCanvas.style.border = '2px dashed #7f8c8d';
                 
                 // Check if dropped on building area
                 const touch = e.changedTouches[0];
@@ -437,8 +442,10 @@ function renderBlockStorage() {
                     // Call the drop handler
                     handleCityCanvasDrop(fakeDropEvent);
                 } else {
-                    // Reset position if not dropped on canvas
+                    // If not dropped on canvas, reset position
                     block.style.position = 'static';
+                    block.style.left = 'auto';
+                    block.style.top = 'auto';
                 }
             });
         })(blockData);

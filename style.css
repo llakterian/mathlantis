@@ -114,31 +114,30 @@ h1 {
 }
 
 #instructions-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 8px;
 }
 
 .instruction-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     padding: 8px;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    font-size: 0.9rem;
 }
 
 .instruction-item i {
     color: #3498db;
-    font-size: 1.1rem;
-    min-width: 20px;
+    width: 20px;
+    text-align: center;
 }
 
 .instruction-item span {
+    font-size: 0.9rem;
     color: #2c3e50;
-    line-height: 1.3;
 }
 
 #equation {
@@ -188,6 +187,17 @@ button:hover {
     transform: scale(1.05);
 }
 
+button:active {
+    background-color: #1e5f8e;
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+}
+
 #minigame-btn {
     background-color: #9b59b6;
 }
@@ -196,12 +206,32 @@ button:hover {
     background-color: #8e44ad;
 }
 
+#minigame-btn:active {
+    background-color: #7d3c98;
+    transform: scale(0.95);
+}
+
+#minigame-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.3);
+}
+
 #undo-btn {
     background-color: #e74c3c;
 }
 
 #undo-btn:hover {
     background-color: #c0392b;
+}
+
+#undo-btn:active {
+    background-color: #a93226;
+    transform: scale(0.95);
+}
+
+#undo-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3);
 }
 
 /* Building Area */
@@ -230,6 +260,13 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    outline: none;
 }
 
 .block:hover {
@@ -250,6 +287,12 @@ button:hover {
     font-size: 24px;
     user-select: none;
     position: absolute;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    outline: none;
 }
 
 .city-block:hover {
@@ -331,6 +374,16 @@ button:hover {
     transform: scale(1.05);
 }
 
+.template:active {
+    background: #1e5f8e;
+    transform: scale(0.95);
+}
+
+.template:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+}
+
 /* Effects */
 .confetti {
     position: fixed;
@@ -398,31 +451,21 @@ button:hover {
     }
 
     .button-group {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 3px;
-        justify-items: stretch;
-        margin-top: 6px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 4px;
+        margin-top: 8px;
     }
 
     button {
-        width: 100%;
-        margin-bottom: 0;
-        min-width: auto;
-        max-width: none;
-        font-size: 0.65rem;
-        padding: 4px 6px;
-        min-height: 30px;
-    }
-
-    #instructions-content {
-        grid-template-columns: 1fr;
-        gap: 8px;
-    }
-
-    .instruction-item {
-        font-size: 0.8rem;
-        padding: 7px;
+        flex: 1 1 calc(50% - 2px);
+        min-width: 100px;
+        max-width: 120px;
+        font-size: 0.75rem;
+        padding: 6px 8px;
+        min-height: 36px;
+        margin: 2px;
     }
 }
 
@@ -447,29 +490,16 @@ button:hover {
     }
 
     .button-group {
-        grid-template-columns: 1fr 1fr;
-        gap: 2px;
+        gap: 3px;
     }
 
     button {
-        font-size: 0.6rem;
-        padding: 4px 5px;
-        min-height: 28px;
-    }
-
-    #instructions-content {
-        grid-template-columns: 1fr;
-        gap: 6px;
-    }
-
-    .instruction-item {
-        font-size: 0.75rem;
-        padding: 6px;
-    }
-
-    .instruction-item i {
-        font-size: 1rem;
-        min-width: 18px;
+        flex: 1 1 calc(50% - 1.5px);
+        min-width: 80px;
+        max-width: 100px;
+        font-size: 0.7rem;
+        padding: 5px 6px;
+        min-height: 32px;
     }
 }
 
@@ -508,6 +538,16 @@ button:hover {
     }
 
     #city-canvas {
+        touch-action: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    #city-canvas * {
         touch-action: none;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
