@@ -371,17 +371,24 @@ function renderBlockStorage() {
             
             block.addEventListener('touchstart', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
                 isDragging = true;
                 block.style.opacity = '0.3';
                 block.style.zIndex = '1000';
                 block.style.transform = 'scale(1.1)';
+                
+                // Prevent keyboard from appearing
+                if (document.activeElement && document.activeElement.blur) {
+                    document.activeElement.blur();
+                }
             });
             
             block.addEventListener('touchmove', (e) => {
                 if (!isDragging) return;
                 e.preventDefault();
+                e.stopPropagation();
                 
                 const touch = e.touches[0];
                 const rect = block.getBoundingClientRect();
@@ -406,6 +413,7 @@ function renderBlockStorage() {
             block.addEventListener('touchend', (e) => {
                 if (!isDragging) return;
                 e.preventDefault();
+                e.stopPropagation();
                 
                 isDragging = false;
                 block.style.opacity = '1';
@@ -925,6 +933,9 @@ function handleCityCanvasDrop(e) {
     block.textContent = emoji;
     block.draggable = true;
     block.dataset.value = value;
+    block.setAttribute('contenteditable', 'false');
+    block.setAttribute('readonly', 'readonly');
+    block.tabIndex = -1;
     
     // Add drag events for placed blocks (both mouse and touch)
     block.addEventListener('dragstart', (e) => {
@@ -947,6 +958,7 @@ function handleCityCanvasDrop(e) {
     
     block.addEventListener('touchstart', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
         isDragging = true;
@@ -959,11 +971,17 @@ function handleCityCanvasDrop(e) {
         const canvasRect = cityCanvas.getBoundingClientRect();
         offsetX = touchStartX - rect.left;
         offsetY = touchStartY - rect.top;
+        
+        // Prevent keyboard from appearing
+        if (document.activeElement && document.activeElement.blur) {
+            document.activeElement.blur();
+        }
     });
     
     block.addEventListener('touchmove', (e) => {
         if (!isDragging) return;
         e.preventDefault();
+        e.stopPropagation();
         
         const touch = e.touches[0];
         const canvasRect = cityCanvas.getBoundingClientRect();
@@ -988,6 +1006,7 @@ function handleCityCanvasDrop(e) {
     block.addEventListener('touchend', (e) => {
         if (!isDragging) return;
         e.preventDefault();
+        e.stopPropagation();
         
         isDragging = false;
         block.style.opacity = '1';
@@ -1032,6 +1051,19 @@ function setupEventListeners() {
     });
     
     cityCanvas.addEventListener('drop', handleCityCanvasDrop);
+    
+    // Prevent keyboard from appearing on city canvas touch
+    cityCanvas.addEventListener('touchstart', (e) => {
+        if (document.activeElement && document.activeElement.blur) {
+            document.activeElement.blur();
+        }
+    }, { passive: false });
+
+    cityCanvas.addEventListener('touchend', (e) => {
+        if (document.activeElement && document.activeElement.blur) {
+            document.activeElement.blur();
+        }
+    }, { passive: false });
     
     // Enable dragging placed blocks around the canvas
     cityCanvas.addEventListener('dragover', (e) => {

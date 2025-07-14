@@ -188,7 +188,8 @@ button:hover {
 }
 
 button:active {
-    background-color: #1e5f8e;
+    background-color: #1e5f8e !important;
+    color: white !important;
     transform: scale(0.95);
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
@@ -207,7 +208,8 @@ button:focus {
 }
 
 #minigame-btn:active {
-    background-color: #7d3c98;
+    background-color: #7d3c98 !important;
+    color: white !important;
     transform: scale(0.95);
 }
 
@@ -225,7 +227,8 @@ button:focus {
 }
 
 #undo-btn:active {
-    background-color: #a93226;
+    background-color: #a93226 !important;
+    color: white !important;
     transform: scale(0.95);
 }
 
@@ -244,6 +247,13 @@ button:focus {
     position: relative;
     overflow: auto;
     touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .block {
@@ -375,7 +385,8 @@ button:focus {
 }
 
 .template:active {
-    background: #1e5f8e;
+    background: #1e5f8e !important;
+    color: white !important;
     transform: scale(0.95);
 }
 
