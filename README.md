@@ -157,28 +157,3 @@ This project is open source and available under the [MIT License](LICENSE).
 
 </div>
 ```
-
-## 4. Additional files you might want to create:
-
-```bash
-echo "node_modules/
-*.log
-.DS_Store
-*.zip
-.env" > .gitignore
-```
-
-## 5. Final steps:
-
-After creating the README.md file, add it to your repository:
-
-```bash
-git add README.md .gitignore
-```
-
-```bash
-git commit -m "Add comprehensive README.md and .gitignore"
-```
-
-```bash
-git push origin main
