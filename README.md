@@ -1,4 +1,4 @@
-# 🌊 Mathlantis - The Lost City of Numbers!
+# Mathlantis - The Lost City of Numbers!
 
 <div align="center">
 
@@ -9,44 +9,44 @@
 
 *An engaging educational game where math skills build magnificent cities!*
 
-[🎮 Play Now](#getting-started) • [🎯 Features](#features) • [📖 How to Play](#how-to-play) • [🚀 Installation](#installation)
+[Play Now](#getting-started) • [Features](#features) • [How to Play](#how-to-play) • [🚀 Installation](#installation)
 
 </div>
 
 ---
 
-## 🌟 About Mathlantis
+## About Mathlantis
 
 Welcome to **Mathlantis**, a mystical world where numbers are the key to unlocking ancient wonders! This innovative educational game transforms math practice into an epic adventure of discovery and creation. Solve mathematical quests to earn powerful blocks, and use them to rebuild the legendary lost city of Mathlantis.
 
 Perfect for brave adventurers, aspiring scholars, and anyone who wants to make learning math an exciting journey.
 
-## ✨ Features
+## Features
 
-### 🧮 **Progressive Math Learning**
+### **Progressive Math Learning**
 - **5 Difficulty Levels**: From Beginner to Expert, tailored to your skill level.
 - **Multiple Operations**: Master Addition, Subtraction, Multiplication, and Division.
 - **Adaptive Difficulty**: Challenges grow with you, keeping the adventure exciting.
 - **Real-time Feedback**: Instant encouragement to guide you on your quest.
 
-### 🏛️ **Themed World Building**
+### **Themed World Building**
 - **Unlockable Worlds**: Journey through different eras of Mathlantis, from the Modern City to Ancient Egypt, a Medieval Kingdom, and a Futuristic metropolis!
 - **Unique Templates**: Each world offers exclusive building templates like Pyramids, Castles, and Skyscrapers.
 - **Drag & Drop Interface**: Intuitively place blocks to bring your city to life.
 - **Undo System**: A forgiving 7-step history for creative freedom.
 
-### 🎮 **Engaging Gameplay**
+### **Engaging Gameplay**
 - **Mini-Games (Coming Soon!)**: Each world will feature unique mini-games to test your skills in new ways.
-- **Character Unlocks**: Meet helpful companions like the Math Wizard 🧙 and the Rainbow Unicorn 🦄 as you progress.
+- **Character Unlocks**: Meet helpful companions like the Math Wizard 🧙 and the Rainbow Unicorn as you progress.
 - **Day/Night Cycle**: Experience the beauty of Mathlantis at all hours.
 - **Immersive Audio**: Sound effects and celebration animations make every achievement rewarding.
 
-### 🏆 **Social & Customization Features (Coming Soon!)**
+### **Social & Customization Features (Coming Soon!)**
 - **Leaderboards**: Compete with friends to see who can build the most magnificent city.
 - **City Showcase**: Share your creations with the world.
 - **Building Skins & Avatar Customization**: Personalize your city and character to reflect your style.
 
-## 🎮 How to Play
+## How to Play
 
 1. **Solve Math Problems**: Answer equations to earn blocks
 2. **Collect Blocks**: Different problems give different amounts of blocks
@@ -55,7 +55,7 @@ Perfect for brave adventurers, aspiring scholars, and anyone who wants to make l
 5. **Level Up**: Progress through 5 difficulty levels
 6. **Create & Explore**: Build your unique mathematical metropolis!
 
-### 🎯 Game Progression
+### Game Progression
 
 | Level | Operations | Max Numbers | Special Features |
 |-------|------------|-------------|------------------|
@@ -65,7 +65,7 @@ Perfect for brave adventurers, aspiring scholars, and anyone who wants to make l
 | 🟠 Hard | +, -, × | 1-20 | Multiplication introduced |
 | 🔴 Expert | +, -, ×, ÷ | 1-30 | All operations unlocked |
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Option 1: Play Online
 Simply open `index.html` in your web browser - no installation required!
@@ -93,7 +93,7 @@ npx serve .
 
 Then visit `http://localhost:8000` in your browser.
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Frontend**: Vanilla JavaScript, HTML5, CSS3
 - **Graphics**: CSS animations and transitions
@@ -101,7 +101,7 @@ Then visit `http://localhost:8000` in your browser.
 - **Responsive Design**: Mobile-friendly interface
 - **No Dependencies**: Pure web technologies for maximum compatibility
 
-## 🎨 Game Screenshots
+## Game Screenshots
 
 *Building your mathematical metropolis:*
 - Colorful blocks representing different math achievements
@@ -109,7 +109,7 @@ Then visit `http://localhost:8000` in your browser.
 - Progressive difficulty with visual feedback
 - Character unlocks and celebrations
 
-## 🎯 Educational Benefits
+## Educational Benefits
 
 - **Mental Math Skills**: Rapid calculation improvement
 - **Problem Solving**: Strategic thinking for city planning
@@ -117,7 +117,7 @@ Then visit `http://localhost:8000` in your browser.
 - **Motivation**: Gamified learning keeps students engaged
 - **Self-Paced**: Learn at your own comfortable speed
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! If you have ideas for new features, bug fixes, or improvements, please feel free to open an issue or submit a pull request.
 
@@ -131,15 +131,15 @@ We welcome contributions! If you have ideas for new features, bug fixes, or impr
 ### Contact
 If you have any questions, feedback, or suggestions, you can reach out to the creator at [llakterian@gmail.com](mailto:llakterian@gmail.com).
 
-## 📝 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 👨‍💻 Creator
+## Creator
 
-**Made with ❤️ by [@llakterian](https://github.com/llakterian)**
+**Made by [@llakterian](https://github.com/llakterian)**
 
-### 📧 Contact & Support
+### Contact & Support
 
 - **Email**: llakterian@gmail.com
 - **GitHub**: [@llakterian](https://github.com/llakterian)
@@ -149,9 +149,9 @@ This project is open source and available under the [MIT License](LICENSE).
 
 <div align="center">
 
-### 🌟 If you enjoyed Mathlantis, please give it a star! ⭐
+### If you enjoyed Mathlantis, please give it a star!
 
-**Happy Building! 🏗️✨**
+**Happy Building! **
 
 *Transform your math skills, one block at a time.*
 
