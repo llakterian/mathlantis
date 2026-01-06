@@ -156,4 +156,3 @@ This project is open source and available under the [MIT License](LICENSE).
 *Transform your math skills, one block at a time.*
 
 </div>
-```
