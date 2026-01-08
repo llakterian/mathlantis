@@ -47,7 +47,11 @@
                 </div>
                 <div class="instruction-item">
                     <i class="fas fa-mouse-pointer"></i>
-                    <span>Drag blocks to the building area to create your city</span>
+                    <span>Click building templates to automatically build structures</span>
+                </div>
+                <div class="instruction-item">
+                    <i class="fas fa-hand-pointer"></i>
+                    <span>Or drag blocks to the building area for custom placement</span>
                 </div>
                 <div class="instruction-item">
                     <i class="fas fa-trophy"></i>
@@ -55,7 +59,11 @@
                 </div>
                 <div class="instruction-item">
                     <i class="fas fa-gamepad"></i>
-                    <span>Try mini-games for bonus blocks and fun!</span>
+                    <span>Try mini-games for bonus blocks and world-specific challenges!</span>
+                </div>
+                <div class="instruction-item">
+                    <i class="fas fa-percentage"></i>
+                    <span>Reach 100% to complete your city and unlock celebration!</span>
                 </div>
             </div>
         </div>
@@ -78,23 +86,41 @@
         
         <div id="inventory">
             <h3><i class="fas fa-cubes"></i> Your Blocks: <span id="block-count">0</span></h3>
-            <div id="unlocked-characters"></div>
+            <!-- Day 5 Feature: Puzzle Mode (Hidden for Day 2) -->
+            <!-- <div class="toggle-container">
+                <button id="toggle-mode" class="toggle-btn">Switch to Puzzle Pieces</button>
+            </div> -->
+            <div id="world-selector">
+                <h4><i class="fas fa-globe"></i> Worlds:</h4>
+                <div id="world-buttons"></div>
+            </div>
+            <div id="unlocked-characters">
+                <h4><i class="fas fa-users"></i> Characters:</h4>
+                <div id="character-list"></div>
+            </div>
         </div>
     </div>
 
     <!-- Audio elements with fallback -->
     <audio id="correct-sound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" type="audio/mpeg">
+        <source src="sounds/correct.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrong-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" type="audio/mpeg">
     </audio>
     <audio id="build-sound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" type="audio/mpeg">
+        <source src="sounds/build.mp3" type="audio/mpeg">
     </audio>
     <audio id="unlock-sound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" type="audio/mpeg">
+        <source src="sounds/unlock.mp3" type="audio/mpeg">
     </audio>
     <audio id="celebration-sound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
+        <source src="sounds/celebration.mp3" type="audio/mpeg">
     </audio>
+    <!-- Day 3 Feature: Background Music (Hidden for Day 2) -->
+    <!-- <audio id="background-music" preload="auto" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-game-level-music-689.mp3" type="audio/mpeg">
+    </audio> -->
     
     <script src="game.js"></script>
 </body>
