@@ -80,7 +80,7 @@ const specialBlocks = {
 };
 
 // Themed Worlds
-// Themed Worlds (Day 3-4 content hidden)
+// Themed Worlds (Day 3 Content: Egypt & Medieval)
 const worlds = [
     {
         name: "Modern City",
@@ -91,27 +91,27 @@ const worlds = [
             { shape: "tower", blocks: 15, icon: "fas fa-building" },
             { shape: "castle", blocks: 20, icon: "fas fa-chess-rook" }
         ]
-    }
-    /* Future Worlds - To be unlocked in Days 3 & 4
-    ,
-    { 
-        name: "Ancient Egypt", 
-        minBuildings: 100, 
+    },
+    {
+        name: "Ancient Egypt",
+        minBuildings: 100,
         unlocked: false,
         templates: [
             { shape: "pyramid", blocks: 25, icon: "fas fa-landmark" },
             { shape: "sphinx", blocks: 30, icon: "fas fa-monument" }
         ]
     },
-    { 
-        name: "Medieval Kingdom", 
-        minBuildings: 250, 
+    {
+        name: "Medieval Kingdom",
+        minBuildings: 250,
         unlocked: false,
         templates: [
             { shape: "cathedral", blocks: 35, icon: "fas fa-church" },
             { shape: "fortress", blocks: 40, icon: "fas fa-fort-awesome" }
         ]
-    },
+    }
+    /* Future Worlds - To be unlocked in Day 4
+    ,
     {
         name: "Futuristic City",
         minBuildings: 500,
@@ -196,7 +196,7 @@ function initGame() {
     updateDifficultyDisplay();
     updateUnlockedCharacters();
     updateWorldSelector();
-    // playBackgroundMusic(); // Day 3 Feature
+    playBackgroundMusic(); // Day 3 Feature
     // setupPuzzleToggle(); // Day 5 Feature
 }
 
