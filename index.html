@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -10,18 +11,20 @@
     <title>Mathlantis: Build & Brighten!</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div id="game-container">
         <h1><i class="fas fa-city"></i> Mathlantis: Build & Brighten!</h1>
-        
+
         <div id="progress-bar">
             <div id="progress-fill"></div>
             <div id="progress-text">0% Built</div>
             <div id="difficulty-level">Level: Beginner</div>
         </div>
-        
+
         <div id="math-problem">
             <h2><i class="fas fa-question-circle"></i> Solve to earn blocks!</h2>
             <div id="equation">3 + 4 = ?</div>
@@ -37,7 +40,7 @@
                 <button id="customize-btn"><i class="fas fa-paint-brush"></i> Customize</button>
             </div>
         </div>
-        
+
         <div id="instructions">
             <h2><i class="fas fa-info-circle"></i> How to Play</h2>
             <div id="instructions-content">
@@ -78,18 +81,18 @@
             </div>
             <div id="city-canvas"></div>
         </div>
-        
+
         <div id="professor-container">
             <img id="professor" src="https://i.imgur.com/WQZ5JzG.png" alt="Professor Puzzlo">
             <div id="speech-bubble">Let's build Mathopolis together!</div>
         </div>
-        
+
         <div id="inventory">
             <h3><i class="fas fa-cubes"></i> Your Blocks: <span id="block-count">0</span></h3>
-            <!-- Day 5 Feature: Puzzle Mode (Hidden for Day 2) -->
-            <!-- <div class="toggle-container">
+            <!-- Day 5 Feature: Puzzle Mode -->
+            <div class="toggle-container">
                 <button id="toggle-mode" class="toggle-btn">Switch to Puzzle Pieces</button>
-            </div> -->
+            </div>
             <div id="world-selector">
                 <h4><i class="fas fa-globe"></i> Worlds:</h4>
                 <div id="world-buttons"></div>
@@ -106,7 +109,8 @@
         <source src="sounds/correct.mp3" type="audio/mpeg">
     </audio>
     <audio id="wrong-sound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" type="audio/mpeg">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3"
+            type="audio/mpeg">
     </audio>
     <audio id="build-sound" preload="auto">
         <source src="sounds/build.mp3" type="audio/mpeg">
@@ -121,7 +125,8 @@
     <audio id="background-music" preload="auto" loop>
         <source src="https://assets.mixkit.co/music/preview/mixkit-game-level-music-689.mp3" type="audio/mpeg">
     </audio>
-    
+
     <script src="game.js"></script>
 </body>
+
 </html>

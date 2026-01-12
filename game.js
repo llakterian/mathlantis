@@ -109,9 +109,6 @@ const worlds = [
             { shape: "cathedral", blocks: 35, icon: "fas fa-church" },
             { shape: "fortress", blocks: 40, icon: "fas fa-fort-awesome" }
         ]
-    }
-    /* Future Worlds - To be unlocked in Day 4
-    ,
     {
         name: "Futuristic City",
         minBuildings: 500,
@@ -121,7 +118,6 @@ const worlds = [
             { shape: "biodome", blocks: 60, icon: "fas fa-globe" }
         ]
     }
-    */
 ];
 
 // Unlockable characters
@@ -197,7 +193,7 @@ function initGame() {
     updateUnlockedCharacters();
     updateWorldSelector();
     playBackgroundMusic(); // Day 3 Feature
-    // setupPuzzleToggle(); // Day 5 Feature
+    setupPuzzleToggle(); // Day 5 Feature
 }
 
 // Setup puzzle toggle functionality
