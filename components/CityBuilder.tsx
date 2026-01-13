@@ -47,8 +47,8 @@ const CityBuilder: React.FC<Props> = ({ world, city, inventory, onPlace, onRemov
   const isFilled = city.length === GRID_SIZE * GRID_SIZE;
 
   return (
-    <div className={`relative p-2 w-full h-full flex items-center justify-center overflow-hidden transition-all duration-700 flex-1 min-h-0 ${allCorrect ? 'scale-[1.05]' : ''}`}>
-      <div className="bg-white/90 backdrop-blur-2xl p-1 sm:p-2 md:p-4 rounded-2xl md:rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-2 sm:border-4 md:border-[6px] border-white relative w-auto h-auto max-h-full max-w-full aspect-square flex items-center justify-center overflow-hidden">
+    <div className={`relative p-2 w-full h-full flex items-center justify-center overflow-hidden transition-all duration-700 ${allCorrect ? 'scale-[1.05]' : ''}`}>
+      <div className="bg-white/90 backdrop-blur-2xl p-1 sm:p-2 md:p-4 rounded-2xl md:rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-2 sm:border-4 md:border-[6px] border-white relative h-full w-auto max-w-full aspect-square flex items-center justify-center overflow-hidden">
 
         <div
           className="absolute inset-1 sm:inset-2 md:inset-4 opacity-[0.15] pointer-events-none transition-all duration-1000 rounded-[0.5rem] md:rounded-[2rem] overflow-hidden border border-indigo-100/30"
