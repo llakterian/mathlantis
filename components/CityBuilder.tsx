@@ -12,7 +12,7 @@ interface Props {
 }
 
 const CityBuilder: React.FC<Props> = ({ world, city, inventory, onPlace, onRemove }) => {
-  const [dragOverCell, setDragOverCell] = useState<{x: number, y: number} | null>(null);
+  const [dragOverCell, setDragOverCell] = useState<{ x: number, y: number } | null>(null);
 
   const cells = Array.from({ length: GRID_SIZE * GRID_SIZE }, (_, i) => ({
     x: i % GRID_SIZE,
@@ -47,12 +47,12 @@ const CityBuilder: React.FC<Props> = ({ world, city, inventory, onPlace, onRemov
   const isFilled = city.length === GRID_SIZE * GRID_SIZE;
 
   return (
-    <div className={`relative p-2 w-full h-full flex items-center justify-center overflow-hidden transition-all duration-700 ${allCorrect ? 'scale-[1.05]' : ''}`}>
-      <div className="bg-white/90 backdrop-blur-2xl p-1 sm:p-2 md:p-4 rounded-2xl md:rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-2 sm:border-4 md:border-[6px] border-white relative w-full h-full max-h-full max-w-full aspect-square flex items-center justify-center overflow-hidden">
-        
-        <div 
+    <div className={`relative p-2 w-full h-full flex items-center justify-center overflow-hidden transition-all duration-700 flex-1 min-h-0 ${allCorrect ? 'scale-[1.05]' : ''}`}>
+      <div className="bg-white/90 backdrop-blur-2xl p-1 sm:p-2 md:p-4 rounded-2xl md:rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-2 sm:border-4 md:border-[6px] border-white relative w-auto h-auto max-h-full max-w-full aspect-square flex items-center justify-center overflow-hidden">
+
+        <div
           className="absolute inset-1 sm:inset-2 md:inset-4 opacity-[0.15] pointer-events-none transition-all duration-1000 rounded-[0.5rem] md:rounded-[2rem] overflow-hidden border border-indigo-100/30"
-          style={{ 
+          style={{
             backgroundImage: `url(${theme.imageUrl})`,
             backgroundSize: '100% 100%',
             backgroundPosition: 'center',
@@ -60,9 +60,9 @@ const CityBuilder: React.FC<Props> = ({ world, city, inventory, onPlace, onRemov
           }}
         />
 
-        <div 
+        <div
           className="grid gap-0.5 sm:gap-1 md:gap-2 relative z-10 w-full h-full"
-          style={{ 
+          style={{
             gridTemplateColumns: `repeat(${GRID_SIZE}, minmax(0, 1fr))`,
             gridTemplateRows: `repeat(${GRID_SIZE}, minmax(0, 1fr))`
           }}
@@ -82,7 +82,7 @@ const CityBuilder: React.FC<Props> = ({ world, city, inventory, onPlace, onRemov
                 className={`w-full h-full relative group transition-all rounded-md md:rounded-xl overflow-hidden border cursor-pointer ${isTargeted ? 'ring-2 md:ring-4 ring-indigo-600 ring-offset-1 md:ring-offset-2 scale-95 z-30 shadow-2xl' : 'border-indigo-100/5'}`}
               >
                 {placed ? (
-                  <div 
+                  <div
                     className={`w-full h-full shadow-2xl border transition-all duration-700 ${isCorrectSlot ? 'border-green-500 scale-100' : 'border-red-600 opacity-95 scale-[0.98]'}`}
                     style={{
                       backgroundImage: `url(${theme.imageUrl})`,
@@ -118,13 +118,13 @@ const CityBuilder: React.FC<Props> = ({ world, city, inventory, onPlace, onRemov
       )}
 
       {isFilled && !allCorrect && (
-         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
-            <div className="bg-red-600 px-4 py-1.5 rounded-full shadow-xl border-2 border-white animate-pulse">
-                <p className="text-[8px] md:text-xs font-black text-white uppercase tracking-widest">SOME PIECES ARE MISALIGNED!</p>
-            </div>
-         </div>
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+          <div className="bg-red-600 px-4 py-1.5 rounded-full shadow-xl border-2 border-white animate-pulse">
+            <p className="text-[8px] md:text-xs font-black text-white uppercase tracking-widest">SOME PIECES ARE MISALIGNED!</p>
+          </div>
+        </div>
       )}
-      
+
       <div className="absolute top-0 right-0 bg-indigo-950 w-6 h-6 sm:w-8 sm:h-8 md:w-14 md:h-14 flex items-center justify-center rounded-lg md:rounded-xl shadow-lg text-[6px] sm:text-[8px] md:text-lg animate-bounce-subtle z-40 border-2 border-white font-black text-white uppercase tracking-tighter">
         {theme.icon}
       </div>

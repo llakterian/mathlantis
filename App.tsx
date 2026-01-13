@@ -146,12 +146,12 @@ const App: React.FC = () => {
         soundEnabled={soundEnabled} toggleSound={() => setSoundEnabled(!soundEnabled)}
       />
 
-      <main className="flex-1 min-h-0 flex flex-col md:flex-row items-center justify-center p-2 md:p-4 gap-4 md:gap-8 overflow-hidden">
+      <main className="flex-1 min-h-0 flex flex-col md:flex-row items-stretch justify-center p-2 md:p-4 gap-4 md:gap-8 overflow-hidden">
         <div className="w-full md:w-auto flex-shrink-0 flex items-center justify-center">
           <MathQuest difficulty={difficulty} onSolve={handleSolve} />
         </div>
 
-        <div className="flex-1 w-full flex items-center justify-center min-h-0">
+        <div className="flex-1 w-full flex items-center justify-center min-h-0 overflow-hidden">
           <CityBuilder
             world={world}
             city={city}
