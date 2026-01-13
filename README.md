@@ -19,16 +19,15 @@ The game challenges players to restore Mathlantis by solving arithmetic problems
 - Drag and Drop Interface: Intuitive placement of earned blocks from the inventory to the construction site.
 - State Persistence: Undo functionality to reverse recent construction actions.
 
-### AI Integration
-- Gemini AI Support: Integration with Google Gemini for personalized, context-aware encouragement.
-- Thematic Encouragement: Messages from a "Math Wizard" that change based on your progress and current zone.
+### Reward System
+- Math Wizard Encouragement: Receive motivational messages from the Math Wizard as you progress through the game.
+- Piece Recovery: Each correct answer earns you a unique piece of the city grid.
 
 ## Technology Stack
 
 - Core Framework: React 19
 - Build Tool: Vite
 - Programming Language: TypeScript
-- Intelligence: Google Gemini 1.5 Flash (via @google/genai)
 - Styling: Tailwind CSS
 - State Management: React Hooks (useState, useCallback, useEffect)
 
@@ -44,10 +43,6 @@ The game challenges players to restore Mathlantis by solving arithmetic problems
 2. Install the necessary dependencies:
    ```bash
    npm install
-   ```
-3. Set up your environment variables. Create a `.env.local` file in the root directory and add your Google AI Studio API key:
-   ```env
-   API_KEY=your_gemini_api_key_here
    ```
 
 ### Running the Game
