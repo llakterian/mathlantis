@@ -1,158 +1,81 @@
-# Mathlantis - The Lost City of Numbers!
+# Mathlantis: The Lost City of Numbers
 
-<div align="center">
+Mathlantis is a modern educational web application that combines mathematical challenges with city-building mechanics. Players solve dynamically generated math problems to recover lost fragments of history and rebuild the legendary City of Numbers across different historical and futuristic zones.
 
-![Mathlantis Banner](https://img.shields.io/badge/Mathlantis-Educational%20Game-blueviolet?style=for-the-badge)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+## Overview
 
-*An engaging educational game where math skills build magnificent cities!*
+The game challenges players to restore Mathlantis by solving arithmetic problems. Each correct answer provides a unique puzzle piece (city block) corresponding to the current world theme. Players must not only solve the math but also strategically place the recovered pieces in their correct grid positions to complete the restoration of each zone.
 
-[Play Now](#getting-started) • [Features](#features) • [How to Play](#how-to-play) • [🚀 Installation](#installation)
+## Key Features
 
-</div>
+### Mathematical Challenges
+- Multiple Difficulty Levels: Beginner, Intermediate, and Advanced settings to cater to different skill levels.
+- Adaptive Problem Generation: Real-time math question generation based on selected difficulty.
+- Sound Feedback: Immersive audio cues for correct answers, wrong answers, and building actions.
 
----
+### City Building and Restoration
+- Historical and Futuristic Zones: Rebuild Ancient, Modern, and Cyberpunk versions of Mathlantis.
+- Puzzle Grid System: Each zone consists of a 4x4 grid. Players earn specific pieces that belong to unique coordinates.
+- Drag and Drop Interface: Intuitive placement of earned blocks from the inventory to the construction site.
+- State Persistence: Undo functionality to reverse recent construction actions.
 
-## About Mathlantis
-
-Welcome to **Mathlantis**, a mystical world where numbers are the key to unlocking ancient wonders! This innovative educational game transforms math practice into an epic adventure of discovery and creation. Solve mathematical quests to earn powerful blocks, and use them to rebuild the legendary lost city of Mathlantis.
-
-Perfect for brave adventurers, aspiring scholars, and anyone who wants to make learning math an exciting journey.
-
-## Features
-
-### **Progressive Math Learning**
-- **5 Difficulty Levels**: From Beginner to Expert, tailored to your skill level.
-- **Multiple Operations**: Master Addition, Subtraction, Multiplication, and Division.
-- **Adaptive Difficulty**: Challenges grow with you, keeping the adventure exciting.
-- **Real-time Feedback**: Instant encouragement to guide you on your quest.
-
-### **Themed World Building**
-- **Unlockable Worlds**: Journey through different eras of Mathlantis, from the Modern City to Ancient Egypt, a Medieval Kingdom, and a Futuristic metropolis!
-- **Unique Templates**: Each world offers exclusive building templates like Pyramids, Castles, and Skyscrapers.
-- **Drag & Drop Interface**: Intuitively place blocks to bring your city to life.
-- **Undo System**: A forgiving 7-step history for creative freedom.
-
-### **Engaging Gameplay**
-- **Mini-Games (Coming Soon!)**: Each world will feature unique mini-games to test your skills in new ways.
-- **Character Unlocks**: Meet helpful companions like the Math Wizard 🧙 and the Rainbow Unicorn as you progress.
-- **Day/Night Cycle**: Experience the beauty of Mathlantis at all hours.
-- **Immersive Audio**: Sound effects and celebration animations make every achievement rewarding.
-
-### **Social & Customization Features (Coming Soon!)**
-- **Leaderboards**: Compete with friends to see who can build the most magnificent city.
-- **City Showcase**: Share your creations with the world.
-- **Building Skins & Avatar Customization**: Personalize your city and character to reflect your style.
-
-## How to Play
-
-1. **Solve Math Problems**: Answer equations to earn blocks
-2. **Collect Blocks**: Different problems give different amounts of blocks
-3. **Build Your City**: Drag blocks to the building area
-4. **Unlock Characters**: Reach milestones to unlock helpful friends
-5. **Level Up**: Progress through 5 difficulty levels
-6. **Create & Explore**: Build your unique mathematical metropolis!
-
-### Game Progression
-
-| Level | Operations | Max Numbers | Special Features |
-|-------|------------|-------------|------------------|
-| 🟢 Beginner | Addition | 1-5 | Basic blocks |
-| 🔵 Easy | +, - | 1-10 | More special blocks |
-| 🟡 Medium | +, - | 1-15 | Enhanced rewards |
-| 🟠 Hard | +, -, × | 1-20 | Multiplication introduced |
-| 🔴 Expert | +, -, ×, ÷ | 1-30 | All operations unlocked |
-
-## Getting Started
-
-### Option 1: Play Online
-Simply open `index.html` in your web browser - no installation required!
-
-### Option 2: Local Development
-```bash
-# Clone the repository
-git clone https://github.com/llakterian/mathlantis.git
-
-# Navigate to the project directory
-cd mathlantis
-
-# Open in your browser
-# Simply double-click index.html or serve with a local server
-```
-
-### Option 3: Live Server (Recommended for Development)
-```bash
-# If you have Python installed
-python -m http.server 8000
-
-# Or with Node.js
-npx serve .
-```
-
-Then visit `http://localhost:8000` in your browser.
+### AI Integration
+- Gemini AI Support: Integration with Google Gemini for personalized, context-aware encouragement.
+- Thematic Encouragement: Messages from a "Math Wizard" that change based on your progress and current zone.
 
 ## Technology Stack
 
-- **Frontend**: Vanilla JavaScript, HTML5, CSS3
-- **Graphics**: CSS animations and transitions
-- **Audio**: HTML5 Audio API
-- **Responsive Design**: Mobile-friendly interface
-- **No Dependencies**: Pure web technologies for maximum compatibility
+- Core Framework: React 19
+- Build Tool: Vite
+- Programming Language: TypeScript
+- Intelligence: Google Gemini 1.5 Flash (via @google/genai)
+- Styling: Tailwind CSS
+- State Management: React Hooks (useState, useCallback, useEffect)
 
-## Game Screenshots
+## Getting Started
 
-*Building your mathematical metropolis:*
-- Colorful blocks representing different math achievements
-- Interactive drag-and-drop city building
-- Progressive difficulty with visual feedback
-- Character unlocks and celebrations
+### Prerequisites
+- Node.js (Latest LTS version recommended)
+- npm or yarn
 
-## Educational Benefits
+### Installation
 
-- **Mental Math Skills**: Rapid calculation improvement
-- **Problem Solving**: Strategic thinking for city planning
-- **Visual Learning**: Spatial reasoning through building
-- **Motivation**: Gamified learning keeps students engaged
-- **Self-Paced**: Learn at your own comfortable speed
+1. Clone the repository to your local machine.
+2. Install the necessary dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up your environment variables. Create a `.env.local` file in the root directory and add your Google AI Studio API key:
+   ```env
+   API_KEY=your_gemini_api_key_here
+   ```
 
-## Contributing
+### Running the Game
 
-We welcome contributions! If you have ideas for new features, bug fixes, or improvements, please feel free to open an issue or submit a pull request.
+Start the development server:
+```bash
+npm run dev
+```
 
-### How to Contribute
-1.  **Fork the repository**
-2.  **Create a new branch:** `git checkout -b feature/your-amazing-feature`
-3.  **Commit your changes:** `git commit -m 'Add some amazing feature'`
-4.  **Push to the branch:** `git push origin feature/your-amazing-feature`
-5.  **Open a Pull Request**
+The application will be available at http://localhost:5173 by default.
 
-### Contact
-If you have any questions, feedback, or suggestions, you can reach out to the creator at [llakterian@gmail.com](mailto:llakterian@gmail.com).
+## Project Structure
+
+- components/: React components for the math interface, city builder, and UI overlays.
+- services/: Modular services for sound effects and math engine logic.
+- constants.tsx: Configuration for world themes, colors, and grid settings.
+- types.ts: TypeScript interfaces and enums for project-wide type safety.
+- App.tsx: Root application component managing game state and logic.
+
+## How to Play
+
+1. Select your Difficulty and World Zone from the UI overlay.
+2. Solve the math problem displayed on the left side of the screen.
+3. Upon solving, a new piece will appear in your inventory (the bottom bar).
+4. Drag the piece from your inventory and drop it onto the construction grid on the right.
+5. If the piece is placed in its original intended slot, you will hear a success chime.
+6. Fill all 16 slots correctly to restore the zone and move to the next world.
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
-
-## Creator
-
-**Made by [@llakterian](https://github.com/llakterian)**
-
-### Contact & Support
-
-- **Email**: llakterian@gmail.com
-- **GitHub**: [@llakterian](https://github.com/llakterian)
-- **Issues**: [Report bugs or request features](https://github.com/llakterian/mathlantis/issues)
-
----
-
-<div align="center">
-
-### If you enjoyed Mathlantis, please give it a star!
-
-**Happy Building! **
-
-*Transform your math skills, one block at a time.*
-
-</div>
+This project is private and intended for educational evaluation purposes.

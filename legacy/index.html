@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#3498db">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Mathlantis: Build & Brighten!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="game-container">
+        <h1><i class="fas fa-city"></i> Mathlantis: Build & Brighten!</h1>
+
+        <div id="progress-bar">
+            <div id="progress-fill"></div>
+            <div id="progress-text">0% Built</div>
+            <div id="difficulty-level">Level: Beginner</div>
+        </div>
+
+        <div id="math-problem">
+            <h2><i class="fas fa-question-circle"></i> Solve to earn blocks!</h2>
+            <div id="equation">3 + 4 = ?</div>
+            <input type="number" id="answer-input" placeholder="Your answer" inputmode="numeric">
+            <div class="button-group">
+                <button id="submit-btn"><i class="fas fa-check"></i> Submit</button>
+                <button id="minigame-btn"><i class="fas fa-gamepad"></i> Mini-Game!</button>
+                <button id="undo-btn"><i class="fas fa-undo"></i> Undo</button>
+            </div>
+            <div class="button-group">
+                <button id="leaderboard-btn"><i class="fas fa-trophy"></i> Leaderboard</button>
+                <button id="city-showcase-btn"><i class="fas fa-camera"></i> Showcase</button>
+                <button id="customize-btn"><i class="fas fa-paint-brush"></i> Customize</button>
+            </div>
+        </div>
+
+        <div id="instructions">
+            <h2><i class="fas fa-info-circle"></i> How to Play</h2>
+            <div id="instructions-content">
+                <div class="instruction-item">
+                    <i class="fas fa-calculator"></i>
+                    <span>Solve math problems to earn colorful blocks</span>
+                </div>
+                <div class="instruction-item">
+                    <i class="fas fa-mouse-pointer"></i>
+                    <span>Click building templates to automatically build structures</span>
+                </div>
+                <div class="instruction-item">
+                    <i class="fas fa-hand-pointer"></i>
+                    <span>Or drag blocks to the building area for custom placement</span>
+                </div>
+                <div class="instruction-item">
+                    <i class="fas fa-trophy"></i>
+                    <span>Build more to unlock new worlds and characters</span>
+                </div>
+                <div class="instruction-item">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Try mini-games for bonus blocks and world-specific challenges!</span>
+                </div>
+                <div class="instruction-item">
+                    <i class="fas fa-percentage"></i>
+                    <span>Reach 100% to complete your city and unlock celebration!</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="building-area">
+            <h2><i class="fas fa-hammer"></i> Build Your City!</h2>
+            <div id="building-templates">
+                <!-- Building templates will be dynamically populated here -->
+            </div>
+            <div id="blocks-container">
+                <!-- Blocks will appear here -->
+            </div>
+            <div id="city-canvas"></div>
+        </div>
+
+        <div id="professor-container">
+            <img id="professor" src="https://i.imgur.com/WQZ5JzG.png" alt="Professor Puzzlo">
+            <div id="speech-bubble">Let's build Mathopolis together!</div>
+        </div>
+
+        <div id="inventory">
+            <h3><i class="fas fa-cubes"></i> Your Blocks: <span id="block-count">0</span></h3>
+            <!-- Removed Puzzle Mode as per user request -->
+            <div id="world-selector">
+                <h4><i class="fas fa-globe"></i> Worlds:</h4>
+                <div id="world-buttons"></div>
+            </div>
+            <div id="unlocked-characters">
+                <h4><i class="fas fa-users"></i> Characters:</h4>
+                <div id="character-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio elements with high-quality whimsical alternatives -->
+    <audio id="correct-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-bright-pay-off-success-2097.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrong-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-negative-tone-interface-947.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="build-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-magical-pop-up-282.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="unlock-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-sparkling-magical-appearance-2342.mp3"
+            type="audio/mpeg">
+    </audio>
+    <audio id="celebration-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-triumphant-brass-fanfare-2339.mp3" type="audio/mpeg">
+    </audio>
+    <!-- Background Music: Upbeat & Whimsical -->
+    <audio id="background-music" preload="auto" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-times-688.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="game.js"></script>
+</body>
+
+</html>

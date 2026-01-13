@@ -5,7 +5,8 @@
     padding: 0;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
@@ -27,9 +28,17 @@ body {
 }
 
 @keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 #game-container {
@@ -96,7 +105,9 @@ h1 {
 }
 
 /* Math Problem Section */
-#math-problem, #building-area, #instructions {
+#math-problem,
+#building-area,
+#instructions {
     background-color: white;
     border-radius: 15px;
     padding: 10px;
@@ -109,20 +120,22 @@ h1 {
     #game-container {
         padding: 5px;
     }
-    
-    #math-problem, #building-area, #instructions {
+
+    #math-problem,
+    #building-area,
+    #instructions {
         padding: 8px;
         margin-bottom: 8px;
     }
-    
+
     h1 {
         margin-bottom: 10px;
     }
-    
+
     .button-group {
         gap: 5px;
     }
-    
+
     button {
         padding: 8px 12px;
         font-size: 14px;
@@ -133,7 +146,7 @@ h1 {
     #instructions {
         display: none;
     }
-    
+
     #game-container {
         padding: 3px;
     }
@@ -164,7 +177,7 @@ h1 {
     padding: 8px;
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .instruction-item i {
@@ -220,15 +233,22 @@ button {
     min-width: 100px;
     max-width: 180px;
     box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     position: relative;
     overflow: hidden;
     animation: buttonFloat 3s ease-in-out infinite alternate;
 }
 
 @keyframes buttonFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-2px); }
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-2px);
+    }
 }
 
 button::before {
@@ -238,7 +258,7 @@ button::before {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.5s ease;
 }
 
@@ -257,8 +277,8 @@ button:active {
     color: white !important;
     border-color: #fff !important;
     transform: scale(0.95) rotate(0deg) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 button:focus {
@@ -286,7 +306,7 @@ button:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 #minigame-btn:hover {
@@ -300,8 +320,8 @@ button:focus {
     color: white !important;
     border-color: #fff !important;
     transform: scale(0.95) rotate(0deg) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 #minigame-btn:focus {
@@ -331,7 +351,7 @@ button:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     font-weight: bold;
 }
 
@@ -346,8 +366,8 @@ button:focus {
     color: white !important;
     border-color: #fff !important;
     transform: scale(0.95) rotate(0deg) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 #undo-btn:focus {
@@ -376,7 +396,7 @@ button:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 #submit-btn:hover {
@@ -390,8 +410,8 @@ button:focus {
     color: white !important;
     border-color: #fff !important;
     transform: scale(0.95) rotate(0deg) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Leaderboard Button - Trophy Shape */
@@ -415,7 +435,7 @@ button:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 #leaderboard-btn:hover {
@@ -429,8 +449,8 @@ button:focus {
     color: white !important;
     border-color: #fff !important;
     transform: scale(0.95) rotate(0deg) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* City Showcase Button - Camera Shape */
@@ -454,7 +474,7 @@ button:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 #city-showcase-btn:hover {
@@ -468,8 +488,8 @@ button:focus {
     color: white !important;
     border-color: #fff !important;
     transform: scale(0.95) rotate(0deg) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Customize Button - Paintbrush Shape */
@@ -493,7 +513,7 @@ button:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 #customize-btn:hover {
@@ -507,8 +527,8 @@ button:focus {
     color: white !important;
     border-color: #fff !important;
     transform: scale(0.95) rotate(0deg) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Building Area */
@@ -537,7 +557,7 @@ button:focus {
     display: inline-block;
     cursor: move;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
     touch-action: none;
     font-size: 20px;
@@ -561,7 +581,7 @@ button:focus {
     width: 50px;
     height: 50px;
     border-radius: 5px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     cursor: move;
     touch-action: none;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -581,12 +601,12 @@ button:focus {
 
 .city-block:hover {
     transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .city-block:active {
     transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .city-block.dragging {
@@ -617,13 +637,20 @@ button:focus {
     width: 140px;
     left: 90px;
     top: -15px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     font-size: 14px;
 }
 
 @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
 }
 
 /* Inventory */
@@ -635,7 +662,7 @@ button:focus {
     color: white;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 100;
     max-width: calc(100% - 20px);
 }
@@ -654,7 +681,7 @@ button:focus {
     font-size: 14px;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     position: relative;
 }
 
@@ -665,7 +692,7 @@ button:focus {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
     transition: left 0.5s ease;
 }
 
@@ -684,8 +711,8 @@ button:focus {
     color: white !important;
     border-color: #fff !important;
     transform: scale(0.95) rotate(0deg) !important;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 .template:focus {
@@ -704,7 +731,9 @@ button:focus {
 }
 
 @keyframes fall {
-    to { transform: translateY(100vh) rotate(360deg); }
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
 }
 
 .unlock-message {
@@ -724,8 +753,14 @@ button:focus {
 }
 
 @keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; display: none; }
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
 }
 
 .night-mode {
@@ -733,9 +768,7 @@ button:focus {
     color: white !important;
 }
 
-.night-mode #city-canvas {
-    background-color: #2c3e50 !important;
-}
+/* Stable Canvas (removed night-mode override) */
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
@@ -748,7 +781,8 @@ button:focus {
     }
 
     #professor-container {
-        display: none; /* Hide professor on smaller screens to save space */
+        display: none;
+        /* Hide professor on smaller screens to save space */
     }
 
     #inventory {
@@ -842,7 +876,8 @@ button:focus {
     }
 
     button {
-        min-height: 44px; /* Minimum touch target size */
+        min-height: 44px;
+        /* Minimum touch target size */
         touch-action: manipulation;
     }
 
@@ -869,16 +904,41 @@ button:focus {
 
 /* Shake animation for wrong answers */
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-    20%, 40%, 60%, 80% { transform: translateX(5px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-5px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(5px);
+    }
 }
 
 /* Pulse animation for correct answers */
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* World selector */
@@ -963,82 +1023,4 @@ button:focus {
     margin-top: 2px;
 }
 
-/* Toggle button styles */
-.toggle-container {
-    margin: 10px 0;
-    text-align: center;
-}
-
-.toggle-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    transition: all 0.3s;
-    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
-}
-
-.toggle-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-}
-
-.toggle-btn:active {
-    transform: translateY(0);
-}
-
-/* Puzzle piece styles */
-.puzzle-piece {
-    width: 60px;
-    height: 60px;
-    margin: 5px;
-    border-radius: 10px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-.puzzle-piece:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.puzzle-piece.placed {
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: scale(0.9);
-}
-
-#puzzle-progress {
-    width: 100%;
-    height: 20px;
-    background: #ecf0f1;
-    border-radius: 10px;
-    margin: 10px 0;
-    overflow: hidden;
-}
-
-#puzzle-progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
-    width: 0%;
-    transition: width 0.5s;
-    border-radius: 10px;
-}
-
-#puzzle-progress-text {
-    text-align: center;
-    font-size: 12px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-top: 5px;
-}
+/* End of Styles */

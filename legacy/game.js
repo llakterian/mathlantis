@@ -11,9 +11,6 @@ let draggedBlock = null;
 let offsetX, offsetY;
 let currentWorld = 0;
 let blockStorage = []; // Persistent storage for blocks
-let usePuzzlePieces = false; // Toggle between blocks and puzzle pieces
-let puzzlePieces = []; // Storage for puzzle pieces
-let puzzleProgress = 0; // Track puzzle completion
 
 // Game difficulty levels
 const difficultyLevels = [
@@ -109,6 +106,7 @@ const worlds = [
             { shape: "cathedral", blocks: 35, icon: "fas fa-church" },
             { shape: "fortress", blocks: 40, icon: "fas fa-fort-awesome" }
         ]
+    },
     {
         name: "Futuristic City",
         minBuildings: 500,
@@ -147,6 +145,7 @@ const undoBtn = document.getElementById('undo-btn');
 // Sound functions with fallback
 function playSound(soundId, volume = 0.3) {
     try {
+        console.log('PLAYING AUDIO:', soundId);
         const sound = document.getElementById(soundId);
         if (sound) {
             sound.currentTime = 0;
@@ -193,164 +192,9 @@ function initGame() {
     updateUnlockedCharacters();
     updateWorldSelector();
     playBackgroundMusic(); // Day 3 Feature
-    setupPuzzleToggle(); // Day 5 Feature
 }
 
-// Setup puzzle toggle functionality
-function setupPuzzleToggle() {
-    const toggleBtn = document.getElementById('toggle-mode');
-    toggleBtn.addEventListener('click', () => {
-        usePuzzlePieces = !usePuzzlePieces;
-        toggleBtn.textContent = usePuzzlePieces ? 'Switch to Blocks' : 'Switch to Puzzle Pieces';
-
-        if (usePuzzlePieces) {
-            showMessage("Switched to Puzzle Pieces mode! Complete puzzles to build!");
-            renderPuzzlePieces();
-        } else {
-            showMessage("Switched to Blocks mode! Drag blocks to build!");
-            renderBlockStorage();
-        }
-    });
-}
-
-// Create puzzle pieces
-function createPuzzlePieces(count) {
-    const puzzleShapes = ['🧩', '🧩', '🧩', '🧩', '🧩', '🧩', '🧩', '🧩', '🧩'];
-    const puzzleColors = ['#e74c3c', '#3498db', '#f1c40f', '#2ecc71', '#9b59b6', '#e67e22', '#1abc9c', '#34495e', '#f39c12'];
-
-    for (let i = 0; i < count; i++) {
-        const pieceData = {
-            id: Date.now() + i,
-            color: puzzleColors[i % puzzleColors.length],
-            shape: puzzleShapes[i % puzzleShapes.length],
-            placed: false
-        };
-
-        puzzlePieces.push(pieceData);
-    }
-
-    renderPuzzlePieces();
-}
-
-// Render puzzle pieces
-function renderPuzzlePieces() {
-    blocksContainer.innerHTML = '';
-
-    if (!usePuzzlePieces || puzzlePieces.length === 0) {
-        blocksContainer.style.display = 'none';
-        return;
-    }
-
-    // Add puzzle progress bar
-    const progressDiv = document.createElement('div');
-    progressDiv.id = 'puzzle-progress';
-    progressDiv.innerHTML = `
-        <div id="puzzle-progress-fill" style="width: ${(puzzleProgress / puzzlePieces.length) * 100}%"></div>
-    `;
-    blocksContainer.appendChild(progressDiv);
-
-    const progressText = document.createElement('div');
-    progressText.id = 'puzzle-progress-text';
-    progressText.textContent = `Puzzle Progress: ${puzzleProgress}/${puzzlePieces.length} pieces`;
-    blocksContainer.appendChild(progressText);
-
-    // Render puzzle pieces
-    const piecesGrid = document.createElement('div');
-    piecesGrid.style.cssText = `
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-        gap: 10px;
-        padding: 10px;
-        justify-items: center;
-    `;
-
-    puzzlePieces.forEach((piece, index) => {
-        const pieceElement = document.createElement('div');
-        pieceElement.className = `puzzle-piece ${piece.placed ? 'placed' : ''}`;
-        pieceElement.style.background = piece.color;
-        pieceElement.textContent = piece.shape;
-        pieceElement.dataset.pieceId = piece.id.toString();
-        pieceElement.dataset.index = index.toString();
-
-        if (!piece.placed) {
-            pieceElement.addEventListener('click', () => placePuzzlePiece(index));
-        }
-
-        piecesGrid.appendChild(pieceElement);
-    });
-
-    blocksContainer.appendChild(piecesGrid);
-    blocksContainer.style.display = 'block';
-}
-
-// Place puzzle piece
-function placePuzzlePiece(index) {
-    if (puzzlePieces[index].placed) return;
-
-    puzzlePieces[index].placed = true;
-    puzzleProgress++;
-
-    // Add visual feedback
-    const piece = document.querySelector(`[data-piece-id="${puzzlePieces[index].id}"]`);
-    if (piece) {
-        piece.classList.add('placed');
-        piece.style.animation = 'pulse 0.5s';
-    }
-
-    playCorrectSound();
-
-    // Update progress
-    const progressFill = document.getElementById('puzzle-progress-fill');
-    const progressText = document.getElementById('puzzle-progress-text');
-
-    if (progressFill) {
-        progressFill.style.width = `${(puzzleProgress / puzzlePieces.length) * 100}%`;
-    }
-
-    if (progressText) {
-        progressText.textContent = `Puzzle Progress: ${puzzleProgress}/${puzzlePieces.length} pieces`;
-    }
-
-    // Check if puzzle is complete
-    if (puzzleProgress === puzzlePieces.length) {
-        celebratePuzzleComplete();
-    } else {
-        showMessage(`Puzzle piece placed! ${puzzlePieces.length - puzzleProgress} pieces remaining!`);
-    }
-
-    // Add building progress for each puzzle piece
-    buildingsBuilt += 2;
-    updateProgress();
-    checkUnlocks();
-}
-
-// Celebrate puzzle completion
-function celebratePuzzleComplete() {
-    playCelebrationSound();
-    showMessage("🎉 Puzzle Complete! Amazing work! 🎉");
-
-    // Create celebration effect
-    for (let i = 0; i < 30; i++) {
-        setTimeout(() => {
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-            confetti.style.left = `${Math.random() * 100}%`;
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
-            confetti.textContent = ['🧩', '⭐', '🎉', '🎊', '✨'][Math.floor(Math.random() * 5)];
-            document.body.appendChild(confetti);
-
-            setTimeout(() => confetti.remove(), 3000);
-        }, i * 50);
-    }
-
-    // Reset puzzle after celebration
-    setTimeout(() => {
-        puzzlePieces = [];
-        puzzleProgress = 0;
-        showMessage("New puzzle available! Solve more problems to get pieces!");
-    }, 3000);
-}
+// Game difficulty logic starts here
 
 // Update difficulty display
 function updateDifficultyDisplay() {
@@ -427,12 +271,8 @@ function checkAnswer() {
         blocks += blocksEarned;
         blockCountEl.textContent = blocks;
 
-        // Create proportional blocks (limited to 10 visual blocks) or puzzle pieces
-        if (usePuzzlePieces) {
-            createPuzzlePieces(Math.min(9, blocksEarned));
-        } else {
-            createNewBlocks(blocksEarned);
-        }
+        // Create proportional blocks (limited to 10 visual blocks)
+        createNewBlocks(blocksEarned);
 
         // Check for difficulty increase based on both correct answers and buildings built
         if ((correctAnswersCount >= 5 || buildingsBuilt >= difficultyLevels[currentDifficulty].minBuildings) &&
@@ -588,10 +428,10 @@ function renderBlockStorage() {
                 // Visual feedback for drop zone
                 const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
                 if (elementBelow && (elementBelow.id === 'city-canvas' || elementBelow.closest('#city-canvas'))) {
-                    cityCanvas.style.backgroundColor = '#d5f5e3';
+                    cityCanvas.style.backgroundColor = '#f0f9f4'; // Subtle highlight
                     cityCanvas.style.border = '2px solid #2ecc71';
                 } else {
-                    cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
+                    cityCanvas.style.backgroundColor = '#ecf0f1'; // Stable background
                     cityCanvas.style.border = '2px dashed #7f8c8d';
                 }
             });
@@ -607,7 +447,7 @@ function renderBlockStorage() {
                 block.style.transform = 'scale(1)';
                 block.style.position = 'static';
                 block.style.pointerEvents = 'auto';
-                cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
+                cityCanvas.style.backgroundColor = '#ecf0f1';
                 cityCanvas.style.border = '2px dashed #7f8c8d';
 
                 // Check if dropped on building area
@@ -916,12 +756,11 @@ function updateWorldSelector() {
     }
 }
 
-// Day/night cycle
+// Day/night cycle (Body only, canvas remains stable)
 function startDayNightCycle() {
     setInterval(() => {
         isDaytime = !isDaytime;
         document.body.classList.toggle('night-mode', !isDaytime);
-        cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
     }, 30000); // Change every 30 seconds
 }
 
@@ -1411,7 +1250,7 @@ function createBuildingStructure(shape, blockCount) {
 // Handle drop events on city canvas (both mouse and touch)
 function handleCityCanvasDrop(e) {
     e.preventDefault();
-    cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
+    cityCanvas.style.backgroundColor = '#ecf0f1'; // Reset to standard subtle background
 
     const color = e.dataTransfer.getData('text/plain');
     const value = parseInt(e.dataTransfer.getData('value'));
@@ -1581,32 +1420,15 @@ function setupEventListeners() {
     // Building area drop zone
     cityCanvas.addEventListener('dragover', (e) => {
         e.preventDefault();
-        cityCanvas.style.backgroundColor = '#d5f5e3';
-    });
 
-    cityCanvas.addEventListener('dragleave', () => {
-        cityCanvas.style.backgroundColor = isDaytime ? '#ecf0f1' : '#2c3e50';
-    });
-
-    cityCanvas.addEventListener('drop', handleCityCanvasDrop);
-
-    // Prevent keyboard from appearing on city canvas touch
-    cityCanvas.addEventListener('touchstart', (e) => {
-        if (document.activeElement && document.activeElement.blur) {
-            document.activeElement.blur();
+        // Handle dragging from storage
+        if (!draggedBlock) {
+            cityCanvas.style.backgroundColor = '#f0f9f4'; // Subtle highlight
+            cityCanvas.style.border = '2px solid #2ecc71';
         }
-    }, { passive: false });
 
-    cityCanvas.addEventListener('touchend', (e) => {
-        if (document.activeElement && document.activeElement.blur) {
-            document.activeElement.blur();
-        }
-    }, { passive: false });
-
-    // Enable dragging placed blocks around the canvas
-    cityCanvas.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        if (draggedBlock) {
+        // Handle dragging placed blocks
+        else {
             const rect = cityCanvas.getBoundingClientRect();
             const x = e.clientX - rect.left - offsetX;
             const y = e.clientY - rect.top - offsetY;
@@ -1619,6 +1441,11 @@ function setupEventListeners() {
             draggedBlock.style.left = `${Math.max(0, Math.min(snappedX, rect.width - 50))}px`;
             draggedBlock.style.top = `${Math.max(0, Math.min(snappedY, rect.height - 50))}px`;
         }
+    });
+
+    cityCanvas.addEventListener('dragleave', () => {
+        cityCanvas.style.backgroundColor = '#ecf0f1';
+        cityCanvas.style.border = '2px dashed #7f8c8d';
     });
 
     // Mini-game button
