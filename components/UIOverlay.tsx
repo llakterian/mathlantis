@@ -17,8 +17,8 @@ interface Props {
   toggleSound: () => void;
 }
 
-const UIOverlay: React.FC<Props> = ({ 
-  stats, world, setWorld, difficulty, setDifficulty, encouragement, isDay, toggleDayNight, undo, canUndo, soundEnabled, toggleSound 
+const UIOverlay: React.FC<Props> = ({
+  stats, world, setWorld, difficulty, setDifficulty, encouragement, isDay, toggleDayNight, undo, canUndo, soundEnabled, toggleSound
 }) => {
   return (
     <div className="z-20 p-1.5 md:p-3 flex flex-col gap-1.5 w-full shrink-0">
@@ -26,7 +26,7 @@ const UIOverlay: React.FC<Props> = ({
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5 bg-white/95 p-1 rounded-lg shadow-lg border border-indigo-50">
           <div className="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[8px] md:text-[10px] font-black uppercase tracking-widest leading-none">HUB</div>
-          <h1 className="text-[10px] md:text-sm font-black text-indigo-900 leading-none hidden sm:block">MATHLANTIS</h1>
+          <img src="/03.png" alt="Mathlantis Logo" className="h-4 md:h-6 w-auto" />
         </div>
 
         <div className="flex-1 max-w-xs hidden md:block overflow-hidden">
@@ -62,9 +62,8 @@ const UIOverlay: React.FC<Props> = ({
               <button
                 key={d}
                 onClick={() => setDifficulty(d)}
-                className={`px-1.5 py-0.5 rounded text-[7px] md:text-[8px] font-black transition-all uppercase tracking-widest whitespace-nowrap ${
-                  difficulty === d ? 'bg-indigo-600 text-white shadow-sm' : 'text-gray-400 hover:bg-indigo-50'
-                }`}
+                className={`px-1.5 py-0.5 rounded text-[7px] md:text-[8px] font-black transition-all uppercase tracking-widest whitespace-nowrap ${difficulty === d ? 'bg-indigo-600 text-white shadow-sm' : 'text-gray-400 hover:bg-indigo-50'
+                  }`}
               >
                 {d.charAt(0)}
               </button>
@@ -79,9 +78,8 @@ const UIOverlay: React.FC<Props> = ({
               <button
                 key={w}
                 onClick={() => setWorld(w)}
-                className={`px-1.5 py-0.5 rounded text-[7px] md:text-[8px] font-black transition-all uppercase tracking-widest whitespace-nowrap ${
-                  world === w ? 'bg-orange-600 text-white shadow-sm' : 'text-gray-400 hover:bg-orange-50'
-                }`}
+                className={`px-1.5 py-0.5 rounded text-[7px] md:text-[8px] font-black transition-all uppercase tracking-widest whitespace-nowrap ${world === w ? 'bg-orange-600 text-white shadow-sm' : 'text-gray-400 hover:bg-orange-50'
+                  }`}
               >
                 {w.split(' ')[0]}
               </button>

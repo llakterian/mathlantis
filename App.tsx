@@ -82,6 +82,13 @@ const App: React.FC = () => {
       setStats(prev => {
         const newSolved = prev.solved + 1;
         if (newSolved % 5 === 0) fetchEncouragement(newSolved);
+
+        // Automatic difficulty scaling
+        if (newSolved === 5) setDifficulty(Difficulty.EASY);
+        else if (newSolved === 15) setDifficulty(Difficulty.MEDIUM);
+        else if (newSolved === 30) setDifficulty(Difficulty.HARD);
+        else if (newSolved === 50) setDifficulty(Difficulty.EXPERT);
+
         return { ...prev, solved: newSolved };
       });
     } else {
@@ -148,7 +155,23 @@ const App: React.FC = () => {
 
       <main className="flex-1 min-h-0 flex flex-col md:flex-row items-center justify-center p-2 md:p-4 gap-4 md:gap-8 overflow-hidden">
         <div className="w-full md:w-auto flex-shrink-0 flex items-center justify-center">
-          <MathQuest difficulty={difficulty} onSolve={handleSolve} />
+          {(() => {
+            const totalPieces = GRID_SIZE * GRID_SIZE;
+            const placedIndices = city.map(pb => pb.block.pieceIndex);
+            const inventoryIndices = blocks.map(b => b.pieceIndex);
+            const usedIndices = new Set([...placedIndices, ...inventoryIndices]);
+            const piecesCollected = usedIndices.size >= totalPieces;
+
+            if (piecesCollected) {
+              return (
+                <div className="bg-white/95 backdrop-blur-md rounded-2xl md:rounded-3xl p-3 md:p-5 shadow-2xl border-b-4 md:border-b-8 border-green-500 w-full max-w-[280px] md:max-w-sm mx-auto text-center">
+                  <h2 className="text-lg md:text-2xl font-black text-green-700 uppercase tracking-tighter">All Pieces Collected!</h2>
+                  <p className="text-sm text-gray-600 mt-2">Now arrange them in the correct positions to complete the puzzle.</p>
+                </div>
+              );
+            }
+            return <MathQuest difficulty={difficulty} onSolve={handleSolve} />;
+          })()}
         </div>
 
         <div className="flex-1 w-full h-full flex items-center justify-center min-h-0 overflow-hidden">

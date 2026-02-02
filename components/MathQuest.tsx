@@ -13,8 +13,20 @@ const MathQuest: React.FC<Props> = ({ difficulty, onSolve }) => {
   const [input, setInput] = useState('');
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
 
+  const usedQuestions = React.useRef<string[]>([]);
+
   const nextQuestion = useCallback(() => {
-    setQuestion(generateQuestion(difficulty));
+    let newQuestion = generateQuestion(difficulty);
+    let attempts = 0;
+
+    // Attempt to find a unique question within a limit
+    while (usedQuestions.current.includes(newQuestion.text) && attempts < 10) {
+      newQuestion = generateQuestion(difficulty);
+      attempts++;
+    }
+
+    setQuestion(newQuestion);
+    usedQuestions.current = [...usedQuestions.current.slice(-15), newQuestion.text];
     setInput('');
     setFeedback(null);
   }, [difficulty]);
@@ -75,11 +87,10 @@ const MathQuest: React.FC<Props> = ({ difficulty, onSolve }) => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="?"
-            className={`w-full text-center text-2xl md:text-5xl p-2 md:p-4 rounded-xl md:rounded-2xl border-2 md:border-4 transition-all outline-none font-black text-indigo-950 placeholder-indigo-100 shadow-md ${
-              feedback === 'wrong' ? 'border-red-500 bg-red-50' : 
-              feedback === 'correct' ? 'border-green-500 bg-green-50' : 
-              'border-indigo-100 focus:border-indigo-600 focus:bg-white'
-            }`}
+            className={`w-full text-center text-2xl md:text-5xl p-2 md:p-4 rounded-xl md:rounded-2xl border-2 md:border-4 transition-all outline-none font-black text-indigo-950 placeholder-indigo-100 shadow-md ${feedback === 'wrong' ? 'border-red-500 bg-red-50' :
+              feedback === 'correct' ? 'border-green-500 bg-green-50' :
+                'border-indigo-100 focus:border-indigo-600 focus:bg-white'
+              }`}
             autoFocus
           />
         </div>
@@ -88,19 +99,9 @@ const MathQuest: React.FC<Props> = ({ difficulty, onSolve }) => {
           className="group w-full bg-indigo-950 hover:bg-black text-white font-black text-sm md:text-lg py-3 md:py-4 rounded-xl md:rounded-2xl shadow-lg transform active:scale-95 transition-all flex items-center justify-center gap-2 uppercase tracking-[0.1em]"
         >
           <span>SUBMIT</span>
-          <span className="group-hover:translate-x-1 transition-transform">→</span>
         </button>
       </form>
 
-      <div className="mt-4 pt-3 border-t-2 border-dotted border-indigo-50 flex flex-col items-center">
-        <div className="flex gap-2">
-          {['Σ', 'Δ', 'Ω'].map((label, i) => (
-            <div key={i} className="bg-indigo-50 px-2 py-1 flex items-center justify-center rounded-lg shadow-sm border border-indigo-100 animate-bounce-subtle text-[8px] font-black text-indigo-400 uppercase tracking-widest" style={{ animationDelay: `${i * 0.4}s` }}>
-              {label}
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };
